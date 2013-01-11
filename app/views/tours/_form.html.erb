@@ -39,13 +39,20 @@
   <div class="control-group">
     <%= f.label :start_date, :class => 'control-label' %>
     <div class="controls">
-      <%= f.date_select :start_date, :class => 'date_select' %>
+      <div class="input-append date" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-behaviour="datepicker">
+        <%= f.text_field :start_date, :class => 'text_field', readonly: true %>
+        <span class="add-on"><i class="icon-calendar"></i></span>
+      </div>
     </div>
   </div>
   <div class="control-group">
     <%= f.label :end_date, :class => 'control-label' %>
     <div class="controls">
-      <%= f.date_select :end_date, :class => 'date_select' %>
+      <div class="input-append date" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-behaviour="datepicker">
+        <%= f.text_field :end_date, :class => 'text_field', readonly: true %>
+        <span class="add-on"><i class="icon-calendar"></i></span>
+      </div>
+      <%#= f.date_select :end_date, :class => 'date_select' %>
     </div>
   </div>
 
