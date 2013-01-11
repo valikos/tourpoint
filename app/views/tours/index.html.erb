@@ -8,6 +8,7 @@
       <th><%= model_class.human_attribute_name(:id) %></th>
       <th><%= model_class.human_attribute_name(:title) %></th>
       <th><%= model_class.human_attribute_name(:description) %></th>
+      <th><%= model_class.human_attribute_name(:price) %></th>
       <th><%= model_class.human_attribute_name(:active) %></th>
       <th><%= model_class.human_attribute_name(:start_date) %></th>
       <th><%= model_class.human_attribute_name(:end_date) %></th>
@@ -21,6 +22,7 @@
         <td><%= link_to tour.id, tour_path(tour) %></td>
         <td><%= tour.title %></td>
         <td><%= tour.description %></td>
+        <td><%= tour.price %></td>
         <td><%= tour.active %></td>
         <td><%= tour.start_date %></td>
         <td><%= tour.end_date %></td>
