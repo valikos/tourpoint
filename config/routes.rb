@@ -1,7 +1,7 @@
 Tourhop::Application.routes.draw do
 
   root :to => 'tours#new'
-  resources :tours, except: [:destroy]
+  resources :tours
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
