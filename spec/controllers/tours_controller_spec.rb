@@ -12,7 +12,6 @@ describe ToursController do
     end
 
     it { should respond_with(:success) }
-    it { should_not set_the_flash }
     it { should render_template(:index) }
     it { should assign_to(:tours) }
   end
@@ -27,7 +26,6 @@ describe ToursController do
     it { should assign_to(:tour) }
     it { should respond_with(:success) }
     it { should render_template(:show) }
-
   end
 
   describe "GET 'new'" do
@@ -55,6 +53,7 @@ describe ToursController do
 
       it { should assign_to(:tour) }
       it { should respond_with(:redirect) }
+      it { should set_the_flash }
       it { should redirect_to(tours_path) }
     end
 
@@ -93,6 +92,7 @@ describe ToursController do
 
       it { should assign_to(:tour) }
       it { should respond_with(:redirect) }
+      it { should set_the_flash }
       it { should redirect_to(tour_path) }
     end
 
@@ -103,6 +103,24 @@ describe ToursController do
       it { should_not set_the_flash }
       it { should respond_with(:success) }
       it { should render_template(:edit) }
+    end
+  end
+
+  describe "DELETE 'destroy'" do
+    before do
+      Tour.stub(:find).and_return(tour)
+      tour.stub(:destroy).and_return(success)
+
+      delete :destroy, id: tour
+    end
+
+    context "on success" do
+      let(:success) { true }
+
+      it { should assign_to(:tour) }
+      it { should respond_with(:redirect) }
+      it { should set_the_flash }
+      it { should redirect_to(tours_path) }
     end
   end
 end

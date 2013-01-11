@@ -1,6 +1,6 @@
 class ToursController < ApplicationController
 
-  before_filter :get_tour, only: [:show, :edit, :update]
+  before_filter :get_tour, only: [:show, :edit, :update, :destroy]
 
   def index
     @tours = Tour.all
@@ -16,7 +16,7 @@ class ToursController < ApplicationController
   def create
     @tour = Tour.new(params[:tour])
     if @tour.save
-      redirect_to tours_url
+      redirect_to tours_url, notice: 'Tour created'
     else
       render :new
     end
@@ -27,10 +27,14 @@ class ToursController < ApplicationController
 
   def update
     if @tour.update_attributes(params[:tour])
-      redirect_to @tour
+      redirect_to @tour, notice: 'Tour updated'
     else
       render :edit
     end
+  end
+
+  def destroy
+    @tour.destroy and redirect_to tours_path, notice: 'Tour deleted'
   end
 
 private
