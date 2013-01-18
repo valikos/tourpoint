@@ -31,7 +31,6 @@ end
 
 gem 'jquery-rails'
 gem 'figaro'
-# To use debugger
 gem 'debugger'
 
 # To use ActiveModel has_secure_password

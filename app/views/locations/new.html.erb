@@ -1,0 +1,30 @@
+<h1>Tour locations</h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Back', tours_path %>
+
+<div class="row">
+  <div class="span8">
+    <div id="tour_locations_box">
+      <h1>Locations</h1>
+
+      <table class="table table-striped" id="tour_locations_list">
+        <tr>
+          <th>№</th>
+          <th>Itenerary</th>
+        </tr>
+        <% if @tour.locations.present? %>
+          <% @tour.locations.each do |location| %>
+            <% if location.id.present? %>
+              <tr>
+                <td>№</td>
+                <td><%= location.title %></td>
+              </tr>
+            <% end %>
+          <% end %>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>

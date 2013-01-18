@@ -11,17 +11,28 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130111142704) do
+ActiveRecord::Schema.define(:version => 20130115133543) do
+
+  create_table "locations", :force => true do |t|
+    t.string   "title",       :null => false
+    t.text     "description", :null => false
+    t.float    "latitude"
+    t.float    "longitude"
+    t.integer  "tour_id",     :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "tours", :force => true do |t|
     t.string   "title"
     t.string   "description"
+    t.decimal  "price",       :precision => 8, :scale => 2
+    t.decimal  "decimal",     :precision => 8, :scale => 2
     t.boolean  "active",                                    :default => true
     t.date     "start_date"
     t.date     "end_date"
     t.datetime "created_at",                                                  :null => false
     t.datetime "updated_at",                                                  :null => false
-    t.decimal  "price",       :precision => 8, :scale => 2
   end
 
 end
