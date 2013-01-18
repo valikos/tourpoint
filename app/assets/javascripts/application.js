@@ -47,6 +47,23 @@
 
   // });
 
+function updateLocationPosition(map){
+  $('#location_latitude').val(map.lat());
+  $('#location_longitude').val(map.lng());
+}
+
+function resetLatLng() {
+  $('#location_latitude').val('');
+  $('#location_longitude').val('');
+}
+
+function resetLocationForm() {
+  $('#location_title').val('');
+  $('#location_description').val('');
+  $('#location_latitude').val('');
+  $('#location_longitude').val('');
+}
+
 $(document).ready(function(e){
 
   if ($('#test_map').length) {
@@ -65,10 +82,12 @@ $(document).ready(function(e){
       map.addMarker({
         lat: pos.lat(),
         lng: pos.lng(),
-        draggable: true
+        draggable: true,
+        dragend: function(map){
+          updateLocationPosition(map.latLng);
+        }
       });
     });
-
 
 /* Example
 
@@ -137,13 +156,10 @@ $('#create_comment_form')
       $('table#tour_locations_list')
       .append("<tr>\
                 <td>№</td>\
-                <td>" + data.title + "</td>\
+                <td><strong>" + data.title + "</strong>\
+                <br />" + data.description + "</td>\
               </tr>");
-
-
-
-
-      console.log(evt, data, status, xhr);
+      resetLocationForm();
     })
     .live('ajax:complete', function(e){
       // console.log(e);

@@ -19,7 +19,10 @@
             <% if location.id.present? %>
               <tr>
                 <td>№</td>
-                <td><%= location.title %></td>
+                <td>
+                  <strong><%= location.title %></strong><br />
+                  <%= location.description %>
+                </td>
               </tr>
             <% end %>
           <% end %>
