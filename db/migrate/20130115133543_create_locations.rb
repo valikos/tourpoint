@@ -6,6 +6,7 @@ class CreateLocations < ActiveRecord::Migration
       t.float :latitude
       t.float :longitude
       t.integer :tour_id, null: false
+      t.integer :order
 
       t.timestamps
     end
