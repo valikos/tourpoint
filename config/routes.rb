@@ -1,7 +1,10 @@
 Tourhop::Application.routes.draw do
 
-  root :to => 'tours#new'
-  resources :tours
+  root :to => 'tours#index'
+
+  resources :tours do
+    resource :locations
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

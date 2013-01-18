@@ -33,6 +33,7 @@
     <!-- For all other devices -->
     <!-- Size should be 32 x 32 pixels -->
     <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
   </head>
   <body>
 
@@ -47,9 +48,8 @@
           <a class="brand" href="#">Tourhop</a>
           <div class="container nav-collapse">
             <ul class="nav">
-              <li><%= link_to "Link1", "/path1"  %></li>
-              <li><%= link_to "Link2", "/path2"  %></li>
-              <li><%= link_to "Link3", "/path3"  %></li>
+              <li><%= link_to "Tours", tours_path  %></li>
+              <li><%= link_to "Locations", '#' %></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -69,16 +69,15 @@
               <h3>Sidebar</h3>
               <ul class="nav nav-list">
                 <li class="nav-header">Sidebar</li>
-                <li><%= link_to "Link1", "/path1"  %></li>
-                <li><%= link_to "Link2", "/path2"  %></li>
-                <li><%= link_to "Link3", "/path3"  %></li>
+                <li><%= link_to "Tours", tours_path  %></li>
+                <li><%= link_to "Locations", '#' %></li>
               </ul>
             </div><!--/.well -->
           </div><!--/span-->
         </div><!--/row-->
 
       <footer>
-        <p>&copy; Company 2012</p>
+        <p>&copy; Company 2013</p>
       </footer>
 
     </div> <!-- /container -->
@@ -86,6 +85,7 @@
     <!-- Javascripts
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <%#= javascript_include_tag "http://maps.google.com/maps/api/js?sensor=true" %>
     <%= javascript_include_tag "application" %>
 
   </body>

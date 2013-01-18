@@ -1,0 +1,47 @@
+<div class="row-fluid">
+  <div class="span4">
+    <%= form_for(@location, url: tour_locations_path, remote: true) do |f| %>
+      <% if @location.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@location.errors.count, "error") %> prohibited this location from being saved:</h2>
+
+          <ul>
+          <% @location.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <%= f.hidden_field :latitude %>
+      <%= f.hidden_field :longitude %>
+
+      <div class="control-group">
+        <%#= f.label :title, :class => 'control-label' %>
+        <div class="controls">
+          <%= f.text_field :title, :class => 'text_field', placeholder: 'Title' %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%#= f.label :description, :class => 'control-label' %>
+        <div class="controls">
+          <%= f.text_area :description, :class => 'text_field', rows: 6, placeholder: 'Description' %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="controls">
+          <%= link_to 'Put marker on the map', '#', id: 'add-marker', class: 'btn btn-info' %>
+        </div>
+      </div>
+
+      <div class="actions">
+        <%= f.submit 'Add location', class: 'btn btn-success' %>
+      </div>
+    <% end %>
+  </div>
+  <div class="span8">
+    <div id="test_map" style="height:300px;"></div>
+  </div>
+</div>
