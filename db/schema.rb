@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(:version => 20130115133543) do
     t.float    "latitude"
     t.float    "longitude"
     t.integer  "tour_id",     :null => false
+    t.integer  "order"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
