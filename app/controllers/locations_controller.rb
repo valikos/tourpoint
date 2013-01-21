@@ -5,7 +5,6 @@ class LocationsController < ApplicationController
 
   def show
     @location = Location.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @location }
@@ -15,10 +14,12 @@ class LocationsController < ApplicationController
   def new
     @tour = Tour.find(params[:tour_id])
     @location = @tour.locations.build
-    # respond_to do |format|
-    #   format.html # new.html.erb
-    #   format.json { render json: @location }
-    # end
+    @json = @tour.locations.order("locations.order").all.to_gmaps4rails do |location, marker|
+      marker.title   location.title
+      marker.sidebar location.description
+      marker.json({ :id => location.id, :foo => location.title })
+    end
+    @polylines = "[#{@json}]"
   end
 
   def edit
@@ -28,6 +29,7 @@ class LocationsController < ApplicationController
   def create
     @tour = Tour.find(params[:tour_id])
     @location = @tour.locations.build(params[:location])
+    @location.order = @tour.locations.count + 1
     if @location.save
       render json: @location, status: :created, location: tour_locations_path
     else

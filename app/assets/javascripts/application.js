@@ -12,40 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require gmaps
 //= require twitter/bootstrap
 //= require bootstrap-datepicker/core
 //= require_tree .
-
-  // var path = [];
-
-  // $('.add-marker').on('click', function(e){
-  //   var pos = map.getCenter();
-
-  //   map.addMarker({
-  //     lat: pos.lat(),
-  //     lng: pos.lng(),
-  //     draggable: true
-  //   });
-
-  //   path.push([pos.lat(), pos.lng()]);
-
-  //   var allMarkers = map.markers;
-
-  //   if (allMarkers.length > 1) {
-  //     console.log(allMarkers);
-  //     map.drawPolyline({
-  //       path: path,
-  //       strokeColor: '#000000',
-  //       strokeOpacity: 1.0,
-  //       strokeWeight: 3
-  //     });
-  //   }
-  // });
-
-  // $('.markers').on('click', function(e){
-
-  // });
 
 function updateLocationPosition(map){
   $('#location_latitude').val(map.lat());
@@ -66,28 +35,63 @@ function resetLocationForm() {
 
 $(document).ready(function(e){
 
-  if ($('#test_map').length) {
-
-    map = new GMaps({
-      div: '#test_map',
-      lat: 41.8781136,
-      lng: -87.6297982
+  $('#add-marker').on('click', function(e){
+    e.preventDefault();
+    var position = Gmaps.map.map.getCenter();
+    updateLocationPosition(position);
+    var marker = new google.maps.Marker({
+      position: position,
+      title:"Hello World!",
+      draggable: true
     });
-
-    $('#add-marker').on('click', function(e){
-      e.preventDefault();
-      var pos = map.getCenter();
-      $('#location_latitude').val(pos.lat());
-      $('#location_longitude').val(pos.lng());
-      map.addMarker({
-        lat: pos.lat(),
-        lng: pos.lng(),
-        draggable: true,
-        dragend: function(map){
-          updateLocationPosition(map.latLng);
-        }
-      });
+    google.maps.event.addListener(marker, 'dragend', function(pos){
+      updateLocationPosition(pos.latLng);
     });
+    marker.setMap(Gmaps.map.map);
+  });
+
+  $('#new_location')
+  .live('ajax:before', function(e){
+    // console.log(e);
+  })
+  .live('ajax:loading', function(e){
+    // console.log(e);
+  })
+  .live('ajax:success', function(evt, data, status, xhr){
+    $('table#tour_locations_list')
+    .append("<tr>\
+              <td>№</td>\
+              <td><strong>" + data.title + "</strong>\
+              <br />" + data.description + "</td>\
+            </tr>");
+    resetLocationForm();
+    $('#main_wrap').prepend('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>Added</div>');
+  })
+  .live('ajax:complete', function(e){
+    // console.log(e);
+  })
+  .live('ajax:after', function(e){
+    // console.log(e);
+  })
+  .live('ajax:failure', function(e){
+    console.log('failure');
+  })
+  .live('ajax:error', function( xhr, textStatus, errorThrown ){
+    var error = JSON.parse(textStatus.responseText);
+    console.log(error);
+    var errors = '';
+    jQuery.each( error, function( key, value ) {
+      errors += '<p>' + key + ": " + value[0] + '</p>';
+    });
+    $('#main_wrap').prepend('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>' + errors
+    + '</div>');
+  })
+  ;
+
+  $(document).on("focus", "[data-behaviour~='datepicker']", function(e){
+      $(this).datepicker({"format": "yyyy-mm-dd", "weekStart": 1, "autoclose": true});
+  });
+});
 
 /* Example
 
@@ -144,34 +148,3 @@ $('#create_comment_form')
       $form.find('div.validation-error').html(errorText);
     });
 */
-
-    $('#new_location')
-    .live('ajax:before', function(e){
-      // console.log(e);
-    })
-    .live('ajax:loading', function(e){
-      // console.log(e);
-    })
-    .live('ajax:success', function(evt, data, status, xhr){
-      $('table#tour_locations_list')
-      .append("<tr>\
-                <td>№</td>\
-                <td><strong>" + data.title + "</strong>\
-                <br />" + data.description + "</td>\
-              </tr>");
-      resetLocationForm();
-    })
-    .live('ajax:complete', function(e){
-      // console.log(e);
-    })
-    .live('ajax:after', function(e){
-      // console.log(e);
-    });
-
-  }
-
-  $(document).on("focus", "[data-behaviour~='datepicker']", function(e){
-      $(this).datepicker({"format": "yyyy-mm-dd", "weekStart": 1, "autoclose": true});
-  });
-
-});

@@ -7,6 +7,9 @@ class ToursController < ApplicationController
   end
 
   def show
+    @locations = @tour.locations
+    @markers = @locations.all.to_gmaps4rails
+    @polylines = "[#{@markers}]"
   end
 
   def new

@@ -42,6 +42,9 @@
     <% end %>
   </div>
   <div class="span8">
-    <div id="test_map" style="height:300px;"></div>
+    <%= gmaps(
+          "markers" => { "data" => @json, "options" => { "draggable" => false } },
+          "polylines" => { "data" => @polylines, "options" => { "strokeColor" => "#000" } }
+    ) %>
   </div>
 </div>
