@@ -9,6 +9,10 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require bootstrap-datepicker
+ *= require gmaps4rails
  *= require_self
  *= require_tree .
  */
+
+#map label { width: auto; display:inline; }
+#map img { max-width: none; }

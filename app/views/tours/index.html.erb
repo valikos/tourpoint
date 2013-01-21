@@ -20,7 +20,7 @@
     <% @tours.each do |tour| %>
       <tr>
         <td><%= link_to tour.id, tour_path(tour) %></td>
-        <td><%= tour.title %></td>
+        <td><%= link_to tour.title, tour_path(tour) %></td>
         <td><%= tour.description %></td>
         <td><%= tour.price %></td>
         <td><%= tour.active %></td>
