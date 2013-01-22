@@ -10,13 +10,15 @@
       :markers => { :data => @markers, :options => { :draggable => false } },
       :polylines => { :data => @polylines, :options => { :strokeColor => "#000" } }
     ) %>
-    <%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_tour_path(@tour), :class => 'btn' %>
+    <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_tour_path(@tour), :class => 'btn' %>
   </div>
   <div class="span7">
     <div class="pull-right span4 well">
       <p><%= @tour.start_date %></p>
       <p><%= @tour.end_date %></p>
+      <p>
+      <%= (@tour.end_date - @tour.start_date).to_i %> days
+      </p>
       <p><%= number_to_currency(@tour.price) %></p>
     </div>
     <p><%= @tour.title %></p>
@@ -30,7 +32,6 @@
     <% end %>
   </div>
 </div>
-
 
 <!-- <div class="form-actions">
   <%#= link_to t('.back', :default => t("helpers.links.back")),

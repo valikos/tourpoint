@@ -12,11 +12,11 @@ class LocationsController < ApplicationController
   end
 
   def new
-    @tour = Tour.find(params[:tour_id])
+    @tour = Tour.includes(:locations).find(params[:tour_id])
     @location = @tour.locations.build
     @json = @tour.locations.order("locations.order").all.to_gmaps4rails do |location, marker|
+      marker.infowindow render_to_string(:partial => "/locations/infowindow", :locals => { :location => location })
       marker.title   location.title
-      marker.sidebar location.description
       marker.json({ :id => location.id, :foo => location.title })
     end
     @polylines = "[#{@json}]"

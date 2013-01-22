@@ -4,7 +4,6 @@
       <% if @location.errors.any? %>
         <div id="error_explanation">
           <h2><%= pluralize(@location.errors.count, "error") %> prohibited this location from being saved:</h2>
-
           <ul>
           <% @location.errors.full_messages.each do |msg| %>
             <li><%= msg %></li>
@@ -12,39 +11,32 @@
           </ul>
         </div>
       <% end %>
-
       <%= f.hidden_field :latitude %>
       <%= f.hidden_field :longitude %>
-
       <div class="control-group">
         <%#= f.label :title, :class => 'control-label' %>
         <div class="controls">
           <%= f.text_field :title, :class => 'text_field', placeholder: 'Title' %>
         </div>
       </div>
-
       <div class="control-group">
         <%#= f.label :description, :class => 'control-label' %>
         <div class="controls">
           <%= f.text_area :description, :class => 'text_field', rows: 6, placeholder: 'Description' %>
         </div>
       </div>
-
-      <div class="control-group">
-        <div class="controls">
-          <%= link_to 'Put marker on the map', '#', id: 'add-marker', class: 'btn btn-info' %>
-        </div>
-      </div>
-
-      <div class="actions">
-        <%= f.submit 'Add location', class: 'btn btn-success' %>
-      </div>
+    <% end %>
+    <%= render 'place/form' %>
+    <%= button_tag(:type => 'button', class: 'btn btn-info', id: 'addLocationToTourItenerary') do %>
+      <%= content_tag(:strong, 'Add location to tour itenerary') %>
     <% end %>
   </div>
   <div class="span8">
+    <% current_place = (@tour.locations.length > 1) ? false : true %>
     <%= gmaps(
-          "markers" => { "data" => @json, "options" => { "draggable" => false } },
-          "polylines" => { "data" => @polylines, "options" => { "strokeColor" => "#000" } }
+          :markers => { :data => @json, :options => { "draggable" => false } },
+          :polylines => { :data => @polylines, :options => { "strokeColor" => "#000" } },
+          :map_options => { :detect_location => current_place, :center_on_user => current_place }
     ) %>
   </div>
 </div>
