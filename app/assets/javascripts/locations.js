@@ -33,6 +33,14 @@ $(document).ready(function(){
     marker.id = data.id;
     marker.order = data.order;
     marker.serviceObject.setAnimation(null);
+    var polylines = Gmaps.map_canvas.polylines;
+    polylines[0].push({
+      lat: marker.serviceObject.position.lat(),
+      lng: marker.serviceObject.position.lng()
+    });
+    Gmaps.map_canvas.destroy_polylines();
+    Gmaps.map_canvas.polylines = polylines;
+    Gmaps.map_canvas.create_polylines();
   })
   .live('ajax:error', function( xhr, textStatus, errorThrown ){
     var error = JSON.parse(textStatus.responseText);
