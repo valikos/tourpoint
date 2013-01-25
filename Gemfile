@@ -31,6 +31,7 @@ end
 
 gem 'jquery-rails'
 gem 'figaro'
+gem 'geocoder'
 gem 'gmaps4rails'
 
 gem 'debugger'

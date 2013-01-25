@@ -8,13 +8,13 @@ class ToursController < ApplicationController
 
   def show
     @locations = @tour.locations
-    @markers = @locations.to_gmaps4rails do |location, marker|
-      marker.infowindow render_to_string(:partial => "/locations/infowindow", :locals => { :location => location })
-      marker.title   location.title
-      marker.sidebar location.description
-      marker.json({ :id => location.id, :foo => location.title })
-    end
-    @polylines = "[#{@markers}]"
+    # @markers = @locations.to_gmaps4rails do |location, marker|
+    #   marker.infowindow render_to_string(:partial => "/locations/infowindow", :locals => { :location => location })
+    #   marker.title   location.title
+    #   marker.sidebar location.description
+    #   marker.json({ :id => location.id, :foo => location.title })
+    # end
+    # @polylines = "[#{@markers}]"
   end
 
   def new
