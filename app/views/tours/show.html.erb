@@ -5,11 +5,7 @@
 
 <div class="row-fluid">
   <div class="span5">
-    <%= gmaps(
-      :map_options => { :container_class => "tour_map_container", :id => "map", :class => "tour_map" },
-      :markers => { :data => @markers, :options => { :draggable => false } },
-      :polylines => { :data => @polylines, :options => { :strokeColor => "#000" } }
-    ) %>
+
     <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_tour_path(@tour), :class => 'btn' %>
   </div>
   <div class="span7">

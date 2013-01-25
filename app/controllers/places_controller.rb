@@ -1,10 +1,10 @@
 class PlacesController < ApplicationController
 
   def create
-    if ( @location = Gmaps4rails.geocode(params[:places][:location]).first )
+    if ( @location = Geocoder.search(params[:places][:location]) )
       render json: @location, status: :created, location: root_path
     else
-      render json: @location.errors, status: :unprocessable_entity
+      render json: @location, status: :unprocessable_entity
     end
   end
 end

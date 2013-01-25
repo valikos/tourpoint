@@ -17,13 +17,22 @@ $(document).ready(function(){
   // })
   .live('ajax:success', function(evt, data, status, xhr){
     $('table#tour_locations_list')
-    .append("<tr>\
-              <td>№</td>\
-              <td><strong>" + data.title + "</strong>\
-              <br />" + data.description + "</td>\
-            </tr>");
+    .append(
+      "<tr>" +
+      "  <td>№</td>" +
+      "  <td><strong>" + data.title + "</strong>" +
+      "  <br />" + data.description + "</td>" +
+      "</tr>"
+    );
     resetLocationForm();
     $('#main_wrap').prepend('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>Added</div>');
+    // drop animation
+    var marker = Gmaps.map_canvas.markers[Gmaps.map_canvas.markers.length - 1];
+    marker.draggable = false;
+    marker.serviceObject.draggable = false;
+    marker.id = data.id;
+    marker.order = data.order;
+    marker.serviceObject.setAnimation(null);
   })
   .live('ajax:error', function( xhr, textStatus, errorThrown ){
     var error = JSON.parse(textStatus.responseText);

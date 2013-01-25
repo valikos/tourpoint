@@ -32,11 +32,27 @@
     <% end %>
   </div>
   <div class="span8">
-    <% current_place = (@tour.locations.length > 1) ? false : true %>
+    <div id="location-status"></div>
     <%= gmaps(
-          :markers => { :data => @json, :options => { "draggable" => false } },
-          :polylines => { :data => @polylines, :options => { "strokeColor" => "#000" } },
-          :map_options => { :detect_location => current_place, :center_on_user => current_place }
+          :map_options => { :container_class => "map_container", :id => "map_canvas", :provider_key => ENV["GOOGLE_KEY"] },
+          :markers => { :data => @markers, :options => { :rich_marker => true } },
+          :polylines => { :data => @polylines }
     ) %>
+
+<!--     <div class="map_container">
+      <div id="map_canvas"></div>
+    </div> -->
+
+  </div>
+</div>
+<div class="modal hide fade" id="location-select">
+  <div class="modal-header">
+    <h3>Choose location</h3>
+  </div>
+  <div class="modal-body" id="location-select-option">
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" id="save-location-select">Save</button>
   </div>
 </div>
