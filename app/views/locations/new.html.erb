@@ -9,23 +9,15 @@
       <h1>Locations</h1>
 
       <table class="table table-striped" id="tour_locations_list">
-        <tr>
-          <th>№</th>
-          <th>Itenerary</th>
-        </tr>
-        <% if @tour.locations.present? %>
-          <% @tour.locations.each do |location| %>
-            <% if location.id.present? %>
-              <tr>
-                <td>№</td>
-                <td>
-                  <strong><%= location.title %></strong><br />
-                  <%= location.description %>
-                </td>
-              </tr>
-            <% end %>
-          <% end %>
-        <% end %>
+        <thead>
+          <tr>
+            <th>№</th>
+            <th>Itinerary</th>
+          </tr>
+        </thead>
+        <tbody data-update-url="<%= sort_tour_locations_path(params[:tour_id]) %>">
+          <%= render @locations %>
+        </tbody>
       </table>
     </div>
   </div>

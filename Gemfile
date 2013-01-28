@@ -22,6 +22,12 @@ group :development, :test do
   gem 'factory_girl_rails', '~> 4.1.0'
 end
 
+group :development do
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'meta_request'
+end
+
 group :test do
   gem 'capybara', '1.1.2'
   gem 'database_cleaner'

@@ -3,9 +3,14 @@
   <h1><%=t '.title', :default => model_class.model_name.human %></h1>
 </div>
 
-<div class="row-fluid">
+<div id="tour-info" class="row-fluid">
   <div class="span5">
-
+    <%= gmaps(
+          :map_options => { :container_class => "map_container", :id => "map_canvas", :provider_key => ENV["GOOGLE_KEY"],
+          :center_latitude => @current_location['lat'], :center_longitude => @current_location['lng'] },
+          :markers => { :data => @markers, :options => { :rich_marker => true } },
+          :polylines => { :data => @polylines }
+    ) %>
     <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_tour_path(@tour), :class => 'btn' %>
   </div>
   <div class="span7">
@@ -19,7 +24,7 @@
     </div>
     <p><%= @tour.title %></p>
     <p><%= @tour.description %></p>
-    <p>Itenerary</p>
+    <p>Itinerary</p>
     <% @locations.each do |location| %>
       <p>
         <span class="lead"><%= location.title %></span><br />

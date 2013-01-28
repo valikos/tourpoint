@@ -28,7 +28,7 @@
         <td><%= tour.end_date %></td>
         <!-- <td><%=l tour.created_at %></td> -->
         <td>
-          <%= link_to 'Locations', new_tour_locations_path(tour), class: 'btn btn-mini btn-info' %>
+          <%= link_to 'Locations', new_tour_location_path(tour), class: 'btn btn-mini btn-info' %>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_tour_path(tour), :class => 'btn btn-mini' %>
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")),

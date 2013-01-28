@@ -1,5 +1,4 @@
 $(document).ready(function(){
-  $('#new_location')
   // .live('ajax:before', function(e){
   //   // console.log(e);
   // })
@@ -15,23 +14,22 @@ $(document).ready(function(){
   // .live('ajax:failure', function(e){
   //   console.log('failure');
   // })
+  $('#new_location')
   .live('ajax:success', function(evt, data, status, xhr){
-    $('table#tour_locations_list')
-    .append(
-      "<tr>" +
-      "  <td>№</td>" +
-      "  <td><strong>" + data.title + "</strong>" +
-      "  <br />" + data.description + "</td>" +
-      "</tr>"
-    );
+    var location = data[0];
+    var partial = data[1].partial;
+    $('table#tour_locations_list').append(partial);
+    // $('#main_wrap').prepend('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>Added</div>');
+
     resetLocationForm();
-    $('#main_wrap').prepend('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>Added</div>');
+
     // drop animation
+
     var marker = Gmaps.map_canvas.markers[Gmaps.map_canvas.markers.length - 1];
     marker.draggable = false;
     marker.serviceObject.draggable = false;
-    marker.id = data.id;
-    marker.order = data.order;
+    marker.id = location.id;
+    marker.order = location.order;
     marker.serviceObject.setAnimation(null);
     var polylines = Gmaps.map_canvas.polylines;
     polylines[0].push({
@@ -52,21 +50,15 @@ $(document).ready(function(){
   });
 
   $('#addLocationToTourItenerary').bind('click', function(e){
+    clearErrorAlert();
+    clearSuccessAlert();
     $('#new_location').trigger('submit');
   });
-});
 
-  // $('#add-marker').on('click', function(e){
-  //   e.preventDefault();
-  //   var position = Gmaps.map.map.getCenter();
-  //   updateLocationPosition(position);
-  //   var marker = new google.maps.Marker({
-  //     position: position,
-  //     title:"Hello World!",
-  //     draggable: true
-  //   });
-  //   google.maps.event.addListener(marker, 'dragend', function(pos){
-  //     updateLocationPosition(pos.latLng);
-  //   });
-  //   marker.setMap(Gmaps.map.map);
-  // });
+  $('.button_to')
+  .live('ajax:success', function(evt, data, status, xhr){
+    $('#location_' + data.id).remove();
+    dropMarker(data.id);
+    rewritePolylines();
+  });
+});

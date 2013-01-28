@@ -11,6 +11,7 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require jquery-ui
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require bootstrap-datepicker/core
@@ -31,66 +32,52 @@ function resetLocationForm() {
   $('#location_description').val('');
   $('#location_latitude').val('');
   $('#location_longitude').val('');
+  $('#places_location').val('');
 }
+
+function dropMarker(id) {
+  var markers = [];
+  $.each(Gmaps.map_canvas.markers, function(index, value) {
+    if(id == value.id){
+      value.serviceObject.setMap(null);
+    }
+  });
+}
+
+function rewritePolylines() {
+  var new_paths = [[]];
+
+  $.each($('table#tour_locations_list tbody tr'), function(index, value) {
+    var id = value.id.split('_')[1];
+    $.each(Gmaps.map_canvas.markers, function(index, marker) {
+      if(id == marker.id){
+        new_paths[0].push(marker);
+      }
+    });
+  });
+  Gmaps.map_canvas.destroy_polylines();
+  Gmaps.map_canvas.polylines = new_paths;
+  Gmaps.map_canvas.create_polylines();
+}
+
+var fixHelper = function(e, ui) {
+  ui.children().each(function() {
+    $(this).width($(this).width());
+  });
+  return ui;
+};
 
 $(document).ready(function(e){
   $(document).on("focus", "[data-behaviour~='datepicker']", function(e){
       $(this).datepicker({"format": "yyyy-mm-dd", "weekStart": 1, "autoclose": true});
   });
+  $('table#tour_locations_list tbody').sortable({
+    axis: 'y',
+    handle: '.drag-handle',
+    update: function(){
+      $.post($(this).data('update-url'), $(this).sortable('serialize'));
+      rewritePolylines();
+    },
+    helper: fixHelper
+  });
 });
-
-/* Example
-
-$('#create_comment_form')
-    .bind("ajax:beforeSend", function(evt, xhr, settings){
-      var $submitButton = $(this).find('input[name="commit"]');
-
-      // Update the text of the submit button to let the user know stuff is happening.
-      // But first, store the original text of the submit button, so it can be restored when the request is finished.
-      $submitButton.data( 'origText', $(this).text() );
-      $submitButton.text( "Submitting..." );
-
-    })
-    .bind("ajax:success", function(evt, data, status, xhr){
-      var $form = $(this);
-
-      // Reset fields and any validation errors, so form can be used again, but leave hidden_field values intact.
-      $form.find('textarea,input[type="text"],input[type="file"]').val("");
-      $form.find('div.validation-error').empty();
-
-      // Insert response partial into page below the form.
-      $('#comments').append(xhr.responseText);
-
-    })
-    .bind('ajax:complete', function(evt, xhr, status){
-      var $submitButton = $(this).find('input[name="commit"]');
-
-      // Restore the original submit button text
-      $submitButton.text( $(this).data('origText') );
-    })
-    .bind("ajax:error", function(evt, xhr, status, error){
-      var $form = $(this),
-          errors,
-          errorText;
-
-      try {
-        // Populate errorText with the comment errors
-        errors = $.parseJSON(xhr.responseText);
-      } catch(err) {
-        // If the responseText is not valid JSON (like if a 500 exception was thrown), populate errors with a generic error message.
-        errors = {message: "Please reload the page and try again"};
-      }
-
-      // Build an unordered list from the list of errors
-      errorText = "There were errors with the submission: \n<ul>";
-
-      for ( error in errors ) {
-        errorText += "<li>" + error + ': ' + errors[error] + "</li> ";
-      }
-
-      errorText += "</ul>";
-
-      // Insert error list into form
-      $form.find('div.validation-error').html(errorText);
-    });
-*/

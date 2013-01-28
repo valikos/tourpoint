@@ -1,5 +1,4 @@
 function addNewLocationMarker(lat, lng){
-  $('#places_location').val('');
   $('#location_latitude').val(lat);
   $('#location_longitude').val(lng);
 
@@ -15,7 +14,29 @@ function addNewLocationMarker(lat, lng){
   var marker = Gmaps.map_canvas.markers[Gmaps.map_canvas.markers.length - 1];
   marker.serviceObject.setAnimation(google.maps.Animation.BOUNCE);
 
-  $('div#location-status').prepend('<p>Click the map or drag the marker to adjust location</p>');
+  google.maps.event.addListener(marker.serviceObject, 'dragend', function(pos){
+    updateLocationPosition(pos.latLng);
+  });
+
+  if($('div#alert-success').length === 0){
+    $('div#location-status').prepend(
+      "<div class=\"alert alert-success\" id=\"alert-success\">" +
+      "Click the map or drag the marker to adjust location" +
+      "<div/>"
+    );
+  }
+}
+
+function clearErrorAlert(){
+  if($('div#alert-error').length === 1){
+    $('div#alert-error').remove();
+  }
+}
+
+function clearSuccessAlert(){
+  if($('div#alert-success').length === 1){
+    $('div#alert-success').remove();
+  }
 }
 
 $(document).ready(function(){
@@ -25,6 +46,7 @@ $(document).ready(function(){
       if (item.length) {
         $('div#location-select').modal('hide');
         addNewLocationMarker($(item).data('lat'), $(item).data('lng'));
+        $('#places_location').val($(item).data('location'));
       }
     });
 
@@ -35,11 +57,16 @@ $(document).ready(function(){
     }
   })
   .live('ajax:error', function( xhr, textStatus, errorThrown ){
-
-    $('div#location-status').prepend('<p>Location not found</p>');
-
+    if($('div#alert-error').length === 0){
+      $('div#location-status').prepend(
+        "<div class=\"alert alert-error\" id=\"alert-error\">" +
+        "Location not found" +
+        "<div/>"
+      );
+    }
   })
   .live('ajax:success', function(evt, data, status, xhr){
+    clearErrorAlert();
     var lat, lng;
 
     if (data instanceof Array && data.length > 1) {
@@ -49,7 +76,7 @@ $(document).ready(function(){
       for (var i in data) {
         $('div#location-select-option').append(
           "<label class=\"radio\">" +
-            "<input type=\"radio\" data-lat=\"" + data[i].data.geometry.location.lat + "\" data-lng=\"" + data[i].data.geometry.location.lng + "\" name=\"optionsRadios\" id=\"optionsRadios" + i + "\" value=\"" + i + "\" >" +
+            "<input type=\"radio\" data-location=\"" + data[i].data.formatted_address + "\" data-lat=\"" + data[i].data.geometry.location.lat + "\" data-lng=\"" + data[i].data.geometry.location.lng + "\" name=\"optionsRadios\" id=\"optionsRadios" + i + "\" value=\"" + i + "\" >" +
             data[i].data.formatted_address +
           "</label>"
         );
