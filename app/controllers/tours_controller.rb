@@ -1,6 +1,7 @@
 class ToursController < ApplicationController
 
   before_filter :get_tour, only: [:show, :edit, :update, :destroy]
+  before_filter :current_location, only: :show
 
   def index
     @tours = Tour.all
@@ -8,13 +9,13 @@ class ToursController < ApplicationController
 
   def show
     @locations = @tour.locations
-    # @markers = @locations.to_gmaps4rails do |location, marker|
-    #   marker.infowindow render_to_string(:partial => "/locations/infowindow", :locals => { :location => location })
-    #   marker.title   location.title
-    #   marker.sidebar location.description
-    #   marker.json({ :id => location.id, :foo => location.title })
-    # end
-    # @polylines = "[#{@markers}]"
+    @markers = @locations.to_gmaps4rails do |location, marker|
+      marker.infowindow render_to_string(:partial => "/locations/infowindow", :locals => { :location => location })
+      marker.title   location.title
+      marker.sidebar location.description
+      marker.json({ :id => location.id, :foo => location.title })
+    end
+    @polylines = "[#{@markers}]"
   end
 
   def new
@@ -49,5 +50,11 @@ private
 
   def get_tour
     @tour = Tour.find(params[:id])
+  end
+
+  def current_location
+    @current_location = {}
+    @current_location['lat'] = reques.location.latitude rescue 0
+    @current_location['lng'] = reques.location.longitude rescue 0
   end
 end

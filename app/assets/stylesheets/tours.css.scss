@@ -1,3 +1,13 @@
 // Place all the styles related to the tours controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+#tour-info{
+  #map_canvas{
+    width: 300px;
+    height: 300px;
+  }
+  .map_container {
+    width: 300px;
+    height: 300px;
+  }
+}

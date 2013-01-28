@@ -1,4 +1,8 @@
 class LocationsController < ApplicationController
+
+  respond_to :json, only: [:destroy]
+  before_filter :current_location, only: :new
+
   def index
     @locations = Location.all
   end
@@ -13,7 +17,7 @@ class LocationsController < ApplicationController
 
   def new
     @tour = Tour.includes(:locations).find(params[:tour_id])
-    @locations = @tour.locations
+    @locations = @tour.locations.order("locations.order")
     @location = @tour.locations.build
     @markers = @tour.locations.order("locations.order").to_gmaps4rails do |location, marker|
       # marker.infowindow render_to_string(:partial => "/locations/infowindow", :locals => { :location => location })
@@ -29,10 +33,12 @@ class LocationsController < ApplicationController
 
   def create
     @tour = Tour.find(params[:tour_id])
+    order = @tour.locations.length + 1
     @location = @tour.locations.build(params[:location])
-    @location.order = @tour.locations.count + 1
+    @location.order = order
     if @location.save
-      render json: @location, status: :created, location: tour_locations_path
+      partial = render_to_string(partial: 'locations/location', :locals => { location: @location })
+      render json: [@location, partial: partial], status: :created, location: tour_locations_path
     else
       render json: @location.errors, status: :unprocessable_entity
     end
@@ -63,15 +69,27 @@ class LocationsController < ApplicationController
     end
   end
 
-  # DELETE /locations/1
-  # DELETE /locations/1.json
   def destroy
-    @location = Location.find(params[:id])
-    @location.destroy
-
-    respond_to do |format|
-      format.html { redirect_to locations_url }
-      format.json { head :no_content }
+    @location = Location.find(:first, conditions: { tour_id: params[:tour_id], id: params[:id]})
+    if @location.destroy
+      render json: @location, status: :accepted
+    else
+      head :no_content
     end
+  end
+
+  def sort
+    params[:location].each_with_index do |id, index|
+      Location.update_all({ order: index + 1 }, { id: id } )
+    end
+    render nothing: true
+  end
+
+private
+
+  def current_location
+    @current_location = {}
+    @current_location['lat'] = reques.location.latitude rescue 0
+    @current_location['lng'] = reques.location.longitude rescue 0
   end
 end
