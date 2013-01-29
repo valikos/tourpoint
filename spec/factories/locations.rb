@@ -2,5 +2,8 @@
 
 FactoryGirl.define do
   factory :location do
+    sequence(:title) { |n| "Location #{n}" }
+    sequence(:description) { Faker::Lorem.paragraph(2) }
+    tour
   end
 end
