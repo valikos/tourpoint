@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130115133543) do
+ActiveRecord::Schema.define(:version => 20130129150535) do
 
   create_table "locations", :force => true do |t|
     t.string   "title",       :null => false
@@ -28,7 +28,6 @@ ActiveRecord::Schema.define(:version => 20130115133543) do
     t.string   "title"
     t.string   "description"
     t.decimal  "price",       :precision => 8, :scale => 2
-    t.decimal  "decimal",     :precision => 8, :scale => 2
     t.boolean  "active",                                    :default => true
     t.date     "start_date"
     t.date     "end_date"
