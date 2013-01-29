@@ -54,7 +54,7 @@ private
 
   def current_location
     @current_location = {}
-    @current_location['lat'] = reques.location.latitude rescue 0
-    @current_location['lng'] = reques.location.longitude rescue 0
+    @current_location['lat'] = request.location.latitude rescue 0
+    @current_location['lng'] = request.location.longitude rescue 0
   end
 end
