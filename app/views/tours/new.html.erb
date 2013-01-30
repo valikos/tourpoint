@@ -3,4 +3,8 @@
   <h1><%=t '.title', :default => t('helpers.titles.new', :model => model_class.model_name.human,
                                  :default => "New #{model_class.model_name.human}") %></h1>
 </div>
+<ul class="breadcrumb">
+  <li><%= link_to 'Home', root_path %><span class="divider">/</span></li>
+  <li class="active">Create tour</li>
+</ul>
 <%= render :partial => 'form' %>

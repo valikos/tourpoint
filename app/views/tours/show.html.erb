@@ -3,6 +3,13 @@
   <h1><%=t '.title', :default => model_class.model_name.human %></h1>
 </div>
 
+<ul class="breadcrumb">
+  <li><%= link_to 'Home', root_path %><span class="divider">/</span></li>
+  <li><%= link_to 'Tour', tours_path %> <span class="divider">/</span></li>
+  <li><%= link_to 'Itenerary', tours_path %> <span class="divider">/</span></li>
+  <li class="active">Create itinerary</li>
+</ul>
+
 <div id="tour-info" class="row-fluid">
   <div class="span5">
     <%= gmaps(

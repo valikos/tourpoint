@@ -69,6 +69,47 @@ describe LocationsController do
     end
   end
 
+  describe "GET 'edit'" do
+    let(:location){ create :location}
+    before do
+      get :edit, tour_id: location.tour.id, id: location.id
+    end
+
+    it { should assign_to(:tour) }
+    it { should assign_to(:location) }
+    it { should respond_with(:accepted) }
+    it { should respond_with_content_type(:json) }
+  end
+
+  describe "PUT 'update'" do
+    let(:tour) { create :tour }
+    let(:location) { create :location, tour: tour }
+
+    context "on success" do
+      let(:location_updates) { attributes_for :location }
+      before do
+        put :update, tour_id: tour.id, id: location.id, location: location_updates
+      end
+
+      it { should assign_to(:tour) }
+      it { should assign_to(:location) }
+      it { should respond_with(:ok) }
+      it { should respond_with_content_type(:json) }
+    end
+
+    context "on failure" do
+      let(:location_updates) { attributes_for :location, title: '', description: '' }
+      before do
+        put :update, tour_id: tour.id, id: location.id, location: location_updates
+      end
+
+      it { should assign_to(:tour) }
+      it { should assign_to(:location) }
+      it { should respond_with(:unprocessable_entity) }
+      it { should respond_with_content_type(:json) }
+    end
+  end
+
   describe "DELETE 'destroy'" do
     let(:tour) { create :tour }
     context "on success" do

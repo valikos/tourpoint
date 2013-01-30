@@ -44,9 +44,16 @@ function dropMarker(id) {
   });
 }
 
-function rewritePolylines() {
-  var new_paths = [[]];
+function rewriteAllPolylines() {
+  var new_paths = [Gmaps.map_canvas.markers];
+  Gmaps.map_canvas.destroy_polylines();
+  Gmaps.map_canvas.polylines = new_paths;
+  Gmaps.map_canvas.create_polylines();
+}
 
+function rewriteSortPolylines() {
+  var new_paths = [[]];
+  console.log($('table#tour_locations_list tbody tr').length);
   $.each($('table#tour_locations_list tbody tr'), function(index, value) {
     var id = value.id.split('_')[1];
     $.each(Gmaps.map_canvas.markers, function(index, marker) {
@@ -58,6 +65,16 @@ function rewritePolylines() {
   Gmaps.map_canvas.destroy_polylines();
   Gmaps.map_canvas.polylines = new_paths;
   Gmaps.map_canvas.create_polylines();
+}
+
+function dropMarkerAnimation(location){
+  // drop animation and set option
+  var marker = Gmaps.map_canvas.markers[Gmaps.map_canvas.markers.length - 1];
+  marker.draggable = false;
+  marker.serviceObject.draggable = false;
+  marker.id = location.id;
+  marker.order = location.order;
+  marker.serviceObject.setAnimation(null);
 }
 
 var fixHelper = function(e, ui) {
@@ -76,7 +93,7 @@ $(document).ready(function(e){
     handle: '.drag-handle',
     update: function(){
       $.post($(this).data('update-url'), $(this).sortable('serialize'));
-      rewritePolylines();
+      rewriteSortPolylines();
     },
     helper: fixHelper
   });
