@@ -5,10 +5,13 @@
     <%= location.description %>
   </td>
   <td>
-    <%= button_to 'Remove', tour_location_path(tour_id: params["tour_id"], id: location.id),
-      class: 'btn btn-inverse remove-location', method: :delete, remote: true, confirm: 'Remove this itinerary?' %>
+    <%= link_to edit_tour_location_path(@tour.id, location.id), remote: true, class: 'start_edit_location' do %>
+      <i class="icon-edit"></i>
+    <% end %>
+    <span class="drag-handle icon-move"></span>
   </td>
   <td>
-    <span class="drag-handle icon-move"></span>
+    <%= button_to 'Delete', tour_location_path(tour_id: params["tour_id"], id: location.id),
+      class: 'btn btn-link remove-location', method: :delete, remote: true, confirm: 'Remove this itinerary?' %>
   </td>
 <% end %>

@@ -1,14 +1,14 @@
 class LocationsController < ApplicationController
 
   respond_to :json, only: [:destroy]
-  before_filter :current_location, only: :new
+  before_filter :current_location, only: [:new, :edit]
 
   def new
     @tour = Tour.find(params[:tour_id])
     @locations = @tour.locations.order("locations.order")
     @location = @tour.locations.build
     @markers = @locations.to_gmaps4rails do |location, marker|
-      # marker.infowindow render_to_string(:partial => "/locations/infowindow", :locals => { :location => location })
+      marker.infowindow render_to_string(:partial => "/locations/infowindow", :locals => { :location => location })
       marker.title(location.title)
       marker.json({ id: location.id, order: location.order, title: location.title })
     end
@@ -28,17 +28,22 @@ class LocationsController < ApplicationController
     end
   end
 
-  def update
-    @location = Location.find(params[:id])
+  def edit
+    @tour = Tour.find(params[:tour_id])
+    @location = @tour.locations.find(params[:id])
+    render json: [@location, action_form: render_to_string(partial: 'locations/form')],
+      status: :accepted
+  end
 
-    respond_to do |format|
-      if @location.update_attributes(params[:location])
-        format.html { redirect_to @location, notice: 'Location was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @location.errors, status: :unprocessable_entity }
-      end
+  def update
+    @tour = Tour.find(params[:tour_id])
+    @location = @tour.locations.find(params[:id])
+
+    if @location.update_attributes(params[:location])
+      partial = render_to_string(partial: 'locations/location', :locals => { location: @location })
+      render json: [@location, partial: partial], status: :ok
+    else
+      render json: @location.errors, status: :unprocessable_entity
     end
   end
 

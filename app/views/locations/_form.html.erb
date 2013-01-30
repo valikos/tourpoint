@@ -1,43 +1,39 @@
-<div class="row-fluid">
-  <div class="span4">
-    <%= form_for(@location, url: tour_locations_path, remote: true) do |f| %>
-      <% if @location.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(@location.errors.count, "error") %> prohibited this location from being saved:</h2>
-          <ul>
-          <% @location.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-          <% end %>
-          </ul>
-        </div>
+<%= form_for([@tour, @location], remote: true) do |f| %>
+  <% if @location.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@location.errors.count, "error") %> prohibited this location from being saved:</h2>
+      <ul>
+      <% @location.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
       <% end %>
-      <%= f.hidden_field :latitude %>
-      <%= f.hidden_field :longitude %>
-      <div class="control-group">
-        <%#= f.label :title, :class => 'control-label' %>
-        <div class="controls">
-          <%= f.text_field :title, :class => 'text_field', placeholder: 'Title' %>
-        </div>
-      </div>
-      <div class="control-group">
-        <%#= f.label :description, :class => 'control-label' %>
-        <div class="controls">
-          <%= f.text_area :description, :class => 'text_field', rows: 6, placeholder: 'Description' %>
-        </div>
-      </div>
-    <% end %>
-    <%= render 'place/form' %>
-    <%= button_tag(:type => 'button', class: 'btn btn-info', id: 'addLocationToTourItenerary') do %>
-      <%= content_tag(:strong, 'Add location to tour itenerary') %>
-    <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= f.hidden_field :latitude %>
+  <%= f.hidden_field :longitude %>
+  <div class="control-group">
+    <%#= f.label :title, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :title, :class => 'text_field', placeholder: 'Title' %>
+    </div>
   </div>
-  <div class="span8">
-    <div id="location-status"></div>
-    <%= gmaps(
-          :map_options => { :container_class => "map_container", :id => "map_canvas", :provider_key => ENV["GOOGLE_KEY"],
-          :center_latitude => @current_location['lat'], :center_longitude => @current_location['lng'] },
-          :markers => { :data => @markers, :options => { :rich_marker => true } },
-          :polylines => { :data => @polylines }
-    ) %>
+  <div class="control-group">
+    <%#= f.label :description, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_area :description, :class => 'text_field', rows: 6, placeholder: 'Description' %>
+    </div>
   </div>
-</div>
+<% end %>
+<%= render 'place/form' %>
+<% if @location.id.blank? %>
+  <%= button_tag(:type => 'button', class: 'btn btn-info', id: 'addLocationToTourItenerary') do %>
+    <%= content_tag(:strong, 'Add location to tour itenerary') %>
+  <% end %>
+<% else %>
+  <%= button_tag(:type => 'button', class: 'btn btn-info', id: 'updateLocationInTourItenerary') do %>
+    <%= content_tag(:strong, 'Update location') %>
+  <% end %>
+  <%= button_tag(:type => 'button', class: 'btn btn-inverse', id: 'closeEditLocationInTourItenerary') do %>
+    <%= content_tag(:strong, 'Close') %>
+  <% end %>
+<% end %>
