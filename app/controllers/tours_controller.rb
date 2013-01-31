@@ -19,7 +19,7 @@ class ToursController < ApplicationController
   end
 
   def new
-    @tour = Tour.new
+    @tour = Tour.new(start_date: Date.today.to_s(:db), end_date: Date.today.to_s(:db))
   end
 
   def create

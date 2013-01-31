@@ -53,11 +53,12 @@ class LocationsController < ApplicationController
     rescue ActiveRecord::RecordNotFound
       head :no_content
     else
-      if @location.destroy
-        render json: @location, status: :accepted
-      else
-        head :no_content
-      end
+      render json: @location, status: :accepted
+      # if @location.destroy
+      #   render json: @location, status: :accepted
+      # else
+      #   head :no_content
+      # end
     end
   end
 

@@ -37,11 +37,23 @@ function resetLocationForm() {
 
 function dropMarker(id) {
   var markers = [];
+  var remove;
   $.each(Gmaps.map_canvas.markers, function(index, value) {
     if(id == value.id){
       value.serviceObject.setMap(null);
+      remove = index;
     }
   });
+  Gmaps.map_canvas.markers.splice(remove, 1);
+}
+
+function dropUndefinedMarker() {
+  var last = Gmaps.map_canvas.markers.length - 1;
+  var marker = Gmaps.map_canvas.markers[last];
+  if (typeof marker.id === "undefined") {
+    marker.serviceObject.setMap(null);
+    Gmaps.map_canvas.markers.splice(last, 1);
+  }
 }
 
 function rewriteAllPolylines() {
@@ -53,7 +65,6 @@ function rewriteAllPolylines() {
 
 function rewriteSortPolylines() {
   var new_paths = [[]];
-  console.log($('table#tour_locations_list tbody tr').length);
   $.each($('table#tour_locations_list tbody tr'), function(index, value) {
     var id = value.id.split('_')[1];
     $.each(Gmaps.map_canvas.markers, function(index, marker) {
@@ -85,9 +96,25 @@ var fixHelper = function(e, ui) {
 };
 
 $(document).ready(function(e){
-  $(document).on("focus", "[data-behaviour~='datepicker']", function(e){
-      $(this).datepicker({"format": "yyyy-mm-dd", "weekStart": 1, "autoclose": true});
+
+  $("#tour_start_date").datepicker({
+    'format': 'yyyy-mm-dd',
+    'weekStart': 0,
+    'autoclose': true
   });
+  $("#tour_end_date").datepicker({
+    'format': 'yyyy-mm-dd',
+    'weekStart': 0,
+    'autoclose': true
+  });
+  // $(document).on("focus", "[data-behaviour~='datepicker']", function(e){
+  //   $(this).datepicker({
+  //     format: "yyyy-mm-dd",
+  //     weekStart: 0,
+  //     autoclose: true
+  //   });
+  // });
+
   $('table#tour_locations_list tbody').sortable({
     axis: 'y',
     handle: '.drag-handle',
