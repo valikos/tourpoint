@@ -8,7 +8,7 @@ class ToursController < ApplicationController
   end
 
   def show
-    @locations = @tour.locations
+    @locations = @tour.locations.order("locations.order")
     @markers = @locations.to_gmaps4rails do |location, marker|
       marker.infowindow render_to_string(:partial => "/locations/infowindow", :locals => { :location => location })
       marker.title   location.title

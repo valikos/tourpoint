@@ -70,6 +70,14 @@ $(document).ready(function(){
 
     window.newLocationForm = $('#action-form').clone();
     $('#action-form').html(form);
+
+    if($('div#alert-success').length === 0){
+      $('div#location-status').prepend(
+        "<div class=\"alert alert-success\" id=\"alert-success\">" +
+        "Click the map or drag the marker to adjust location" +
+        "<div/>"
+      );
+    }
   });
   // location update
   $('.edit_location')
@@ -84,6 +92,8 @@ $(document).ready(function(){
     var view = data[1].partial;
     $('#location_' + location.id).replaceWith(view);
     $('#action-form').html('').append(window.newLocationForm.children());
+
+    clearSuccessAlert();
   })
   .live('ajax:error', function(xhr, textStatus, errorThrown){
     var error = JSON.parse(textStatus.responseText);
@@ -94,62 +104,3 @@ $(document).ready(function(){
     $('#main_wrap').prepend('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>' + errors + '</div>');
   });
 });
-
-function setEditableMarker(id) {
-  var marker;
-  $.each(Gmaps.map_canvas.markers, function(index, value) {
-    if(id == value.id){
-      marker = value;
-      return false;
-    }
-  });
-  marker.serviceObject.setAnimation(google.maps.Animation.BOUNCE);
-  marker.serviceObject.draggable = true;
-  window.editableMarker = marker;
-}
-
-function getMarker(id) {
-  var marker;
-  $.each(Gmaps.map_canvas.markers, function(index, value) {
-    if(id == value.id){
-      marker = value;
-      return false;
-    }
-  });
-  return marker;
-}
-
-function disableEditableMarker(){
-  var marker = window.editableMarker;
-  window.editableMarker = null;
-  marker.serviceObject.setAnimation(null);
-  marker.serviceObject.draggable = false;
-  return marker;
-}
-
-function rewriteMapByOrder(){
-  var old_markers = Gmaps.map_canvas.markers;
-  var markers = [];
-  var paths = [[]];
-
-  Gmaps.map_canvas.destroy_polylines();
-  Gmaps.map_canvas.replaceMarkers();
-
-  $.each($('table#tour_locations_list tbody tr'), function(index, value) {
-    var id = value.id.split('_')[1];
-    $.each(old_markers, function(index, marker) {
-      if(id == marker.id){
-        markers.push(marker);
-        paths[0].push(marker);
-      }
-    });
-  });
-
-  Gmaps.map_canvas.markers = markers;
-  console.log(Gmaps.map_canvas.markers);
-  Gmaps.map_canvas.markers_conf.rich_marker = true;
-  Gmaps.map_canvas.create_markers();
-
-  Gmaps.map_canvas.polylines = paths;
-  Gmaps.map_canvas.create_polylines();
-}
