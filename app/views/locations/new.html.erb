@@ -2,7 +2,7 @@
 
 <ul class="breadcrumb">
   <li><%= link_to 'Home', root_path %><span class="divider">/</span></li>
-  <li><%= link_to 'Tour', tours_path %> <span class="divider">/</span></li>
+  <li><%= link_to 'Tour', edit_tour_path(@tour.id) %> <span class="divider">/</span></li>
   <li class="active">Create itinerary</li>
 </ul>
 
@@ -23,24 +23,20 @@
 
 <%= link_to 'Back', tours_path %>
 
-<div class="row">
-  <div class="span8">
-    <div id="tour_locations_box">
-      <h1>Locations</h1>
+<div id="tour_locations_box">
+  <h1>Locations</h1>
 
-      <table class="table table-striped" id="tour_locations_list">
-        <thead>
-          <tr>
-            <th>№</th>
-            <th>Itinerary</th>
-          </tr>
-        </thead>
-        <tbody data-update-url="<%= sort_tour_locations_path(params[:tour_id]) %>">
-          <%= render @locations %>
-        </tbody>
-      </table>
-    </div>
-  </div>
+  <table class="table table-striped" id="tour_locations_list">
+    <thead>
+      <tr>
+        <th>Itinerary</th>
+        <th style="width:50px"></th>
+      </tr>
+    </thead>
+    <tbody data-update-url="<%= sort_tour_locations_path(params[:tour_id]) %>">
+      <%= render @locations %>
+    </tbody>
+  </table>
 </div>
 
 <div class="modal hide fade" id="location-select">

@@ -1,17 +1,16 @@
 <%= content_tag_for :tr, location do %>
-  <td><%= location.order %></td>
   <td>
     <strong><%= location.title %></strong><br />
     <%= location.description %>
   </td>
   <td>
-    <%= link_to edit_tour_location_path(@tour.id, location.id), remote: true, class: 'start_edit_location' do %>
+    <%= link_to edit_tour_location_path(@tour.id, location.id), remote: true, class: 'start_edit_location', title: 'Edit' do %>
       <i class="icon-edit"></i>
     <% end %>
-    <span class="drag-handle icon-move"></span>
-  </td>
-  <td>
-    <%= button_to 'Delete', tour_location_path(tour_id: params["tour_id"], id: location.id),
-      class: 'btn btn-link remove-location', method: :delete, remote: true, confirm: 'Remove this itinerary?' %>
+    <span class="drag-handle icon-move" title="Reorder"></span>
+    <%= link_to tour_location_path(tour_id: @tour.id, id: location.id), method: :delete, class: 'remove_itinerary',
+      data: { confirm: 'Are you sure?', remote: true }, title: 'Delete' do %>
+        <i class="icon-trash"></i>
+    <% end %>
   </td>
 <% end %>

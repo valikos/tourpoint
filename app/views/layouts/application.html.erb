@@ -48,8 +48,6 @@
           <%= link_to 'Tourhop', root_path, class: 'brand' %>
           <div class="container nav-collapse">
             <ul class="nav">
-              <li><%= link_to "Tours", tours_path  %></li>
-              <li><%= link_to "Locations", '#' %></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -58,13 +56,14 @@
 
     <div class="container">
         <div class="row">
-          <div class="span9">
+          <div class="span12">
             <%= bootstrap_flash %>
             <div class="well" id="main_wrap">
               <%= yield %>
             </div>
           </div>
-          <div class="span3">
+
+<!--           <div class="span3">
             <div class="well sidebar-nav">
               <h3>Sidebar</h3>
               <ul class="nav nav-list">
@@ -72,8 +71,9 @@
                 <li><%= link_to "Tours", tours_path  %></li>
                 <li><%= link_to "Locations", '#' %></li>
               </ul>
-            </div><!--/.well -->
-          </div><!--/span-->
+            </div>
+          </div> -->
+
         </div><!--/row-->
 
       <footer>
