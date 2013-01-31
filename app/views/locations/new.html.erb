@@ -1,4 +1,6 @@
-<h1><%= @tour.title %></h1>
+<div class="page-header">
+  <h1><%= @tour.title %></h1>
+</div>
 
 <ul class="breadcrumb">
   <li><%= link_to 'Home', root_path %><span class="divider">/</span></li>
@@ -7,10 +9,10 @@
 </ul>
 
 <div class="row-fluid">
-  <div class="span4" id="action-form">
+  <div class="span5" id="action-form">
     <%= render 'form' %>
   </div>
-  <div class="span8">
+  <div class="span7">
     <div id="location-status"></div>
     <%= gmaps(
           :map_options => { :container_class => "map_container", :id => "map_canvas", :provider_key => ENV["GOOGLE_KEY"],
@@ -21,12 +23,10 @@
   </div>
 </div>
 
-<%= link_to 'Back', tours_path %>
+<hr />
 
 <div id="tour_locations_box">
-  <h1>Locations</h1>
-
-  <table class="table table-striped" id="tour_locations_list">
+  <table class="table table-striped table-bordered" id="tour_locations_list">
     <thead>
       <tr>
         <th>Itinerary</th>
@@ -35,6 +35,12 @@
     </thead>
     <tbody data-update-url="<%= sort_tour_locations_path(params[:tour_id]) %>">
       <%= render @locations %>
+      <% if @locations.empty? %>
+      <tr>
+        <td>Empty</td>
+        <td></td>
+      </tr>
+      <% end %>
     </tbody>
   </table>
 </div>

@@ -47,6 +47,7 @@ $(document).ready(function(){
     marker = disableEditableMarker();
     marker.serviceObject.setPosition(new google.maps.LatLng(marker.lat, marker.lng));
     $('#action-form').html('').append(window.newLocationForm.children());
+    clearSuccessAlert();
   });
 
   // remove itinerary actions

@@ -14,26 +14,28 @@
   <div class="control-group">
     <%#= f.label :title, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :title, :class => 'text_field input-xlarge', placeholder: 'Title' %>
+      <%= f.text_field :title, :class => 'text_field span12', placeholder: 'Location title' %>
     </div>
   </div>
   <div class="control-group">
     <%#= f.label :description, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_area :description, :class => 'text_field input-xlarge', rows: 6, placeholder: 'Description' %>
+      <%= f.text_area :description, :class => 'text_field span12', rows: 6, placeholder: 'Location description' %>
     </div>
   </div>
 <% end %>
 <%= render 'place/form' %>
 <% if @location.id.blank? %>
-  <%= button_tag(:type => 'button', class: 'btn btn-info', id: 'addLocationToTourItenerary') do %>
+  <%= button_tag(:type => 'button', class: 'btn btn-info btn-block', id: 'addLocationToTourItenerary') do %>
     <%= content_tag(:strong, 'Add location to tour itenerary') %>
   <% end %>
 <% else %>
-  <%= button_tag(:type => 'button', class: 'btn btn-info', id: 'updateLocationInTourItenerary') do %>
-    <%= content_tag(:strong, 'Update location') %>
-  <% end %>
-  <%= button_tag(:type => 'button', class: 'btn btn-primary', id: 'closeEditLocationInTourItenerary') do %>
-    <%= content_tag(:strong, 'Cancel') %>
-  <% end %>
+  <div>
+    <%= button_tag(:type => 'button', class: 'btn btn-info span8', id: 'updateLocationInTourItenerary') do %>
+      <%= content_tag(:strong, 'Update location') %>
+    <% end %>
+    <%= button_tag(:type => 'button', class: 'btn btn-primary span4', id: 'closeEditLocationInTourItenerary') do %>
+      <%= content_tag(:strong, 'Cancel') %>
+    <% end %>
+  </div>
 <% end %>
