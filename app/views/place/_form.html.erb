@@ -1,4 +1,6 @@
 <%= form_for(:places, url: place_path, remote: true, html: { id: 'place_location', class: 'form-inline' } ) do |f| %>
-  <%= f.text_field :location, class: 'text_field input-small', placeholder: 'Where it is?' %>
-  <%= f.submit 'Search', class: 'btn btn-success' %>
+  <div>
+    <%= f.text_field :location, class: 'text_field span8', placeholder: 'Enter location name or address' %>
+    <%= f.submit 'Locate on map', class: 'btn btn-success span4 pull-right' %>
+  </div>
 <% end %>
