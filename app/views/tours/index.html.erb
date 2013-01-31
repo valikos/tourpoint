@@ -8,11 +8,10 @@
       <th><%= model_class.human_attribute_name(:title) %></th>
       <th><%= model_class.human_attribute_name(:description) %></th>
       <th><%= model_class.human_attribute_name(:price) %></th>
-      <th><%= model_class.human_attribute_name(:active) %></th>
       <th><%= model_class.human_attribute_name(:start_date) %></th>
       <th><%= model_class.human_attribute_name(:end_date) %></th>
       <!-- <th><%= model_class.human_attribute_name(:created_at) %></th> -->
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+      <th style="width:242px"><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
@@ -21,7 +20,6 @@
         <td><%= link_to tour.title, tour_path(tour) %></td>
         <td><%= tour.description %></td>
         <td><%= tour.price %></td>
-        <td><%= tour.active %></td>
         <td><%= tour.start_date %></td>
         <td><%= tour.end_date %></td>
         <!-- <td><%=l tour.created_at %></td> -->
