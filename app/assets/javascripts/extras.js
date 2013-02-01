@@ -160,7 +160,6 @@ function addNewLocationMarker(lat, lng){
 
   var markers = [];
 
-
   var markerOpt = {
     description: '',
     lat: lat,
