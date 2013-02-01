@@ -25,7 +25,9 @@ class LocationsController < ApplicationController
     if @location.save
       partial = render_to_string(partial: 'locations/location',
         :locals => { location: @location })
-      render json: [@location, partial: partial], status: :created,
+      infovindow = render_to_string(:partial => "/locations/infowindow",
+        :locals => { :location => @location })
+      render json: [@location, partial: partial, infovindow: infovindow], status: :created,
         location: tour_locations_path
     else
       render json: @location.errors, status: :unprocessable_entity
@@ -45,7 +47,8 @@ class LocationsController < ApplicationController
 
     if @location.update_attributes(params[:location])
       partial = render_to_string(partial: 'locations/location', :locals => { location: @location })
-      render json: [@location, partial: partial], status: :ok
+      infovindow = render_to_string(:partial => "/locations/infowindow", :locals => { :location => @location })
+      render json: [@location, partial: partial, infowindow: infovindow], status: :ok
     else
       render json: @location.errors, status: :unprocessable_entity
     end
@@ -57,12 +60,11 @@ class LocationsController < ApplicationController
     rescue ActiveRecord::RecordNotFound
       head :no_content
     else
-      render json: @location, status: :accepted
-      # if @location.destroy
-      #   render json: @location, status: :accepted
-      # else
-      #   head :no_content
-      # end
+      if @location.destroy
+        render json: @location, status: :accepted
+      else
+        head :no_content
+      end
     end
   end
 

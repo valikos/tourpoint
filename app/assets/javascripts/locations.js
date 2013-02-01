@@ -18,10 +18,16 @@ $(document).ready(function(){
   .live('ajax:success', function(evt, data, status, xhr){
     var location = data[0];
     var partial = data[1].partial;
+
+    if(location.latitude && location.longitude){
+      window.QWERTYUIO = true;
+    }
+
     $('table#tour_locations_list').append(partial);
     // $('#main_wrap').prepend('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>Added</div>');
+
     resetLocationForm();
-    dropMarkerAnimation(location);
+    dropMarkerAnimation(location, data[1].infovindow);
     rewriteAllPolylines();
   })
   .live('ajax:error', function( xhr, textStatus, errorThrown ){
@@ -40,12 +46,15 @@ $(document).ready(function(){
   });
 
   $('#updateLocationInTourItenerary').live('click', function(e){
-    $('.edit_location').trigger('submit');
+    $('[id^=edit_location_]').trigger('submit');
   });
 
   $('#closeEditLocationInTourItenerary').live('click', function(e){
-    marker = disableEditableMarker();
-    marker.serviceObject.setPosition(new google.maps.LatLng(marker.lat, marker.lng));
+    if(window.QWERTYUIO){
+      window.QWERTYUIO = undefined;
+      marker = disableEditableMarker();
+      marker.serviceObject.setPosition(new google.maps.LatLng(marker.lat, marker.lng));
+    }
     $('#action-form').html('').append(window.newLocationForm.children());
     clearSuccessAlert();
   });
@@ -62,12 +71,11 @@ $(document).ready(function(){
   // get form
   $('.start_edit_location').
   live('ajax:success', function(evt, data, status, xhr){
+    console.log(data);
     var marker = data[0];
     var form = data[1].action_form;
 
     setEditableMarker(marker.id);
-
-    draggedMarker(getMarker(marker.id));
 
     window.newLocationForm = $('#action-form').clone();
     $('#action-form').html(form);
@@ -81,13 +89,19 @@ $(document).ready(function(){
     }
   });
   // location update
-  $('.edit_location')
+  $('[id^=edit_location_]')
   .live('ajax:success', function(evt, data, status, xhr){
 
     var marker = disableEditableMarker();
-    marker.lat = marker.serviceObject.position.lat();
-    marker.lng = marker.serviceObject.position.lng();
-    rewriteSortPolylines();
+
+    console.log(marker);
+
+    if(marker){
+      marker.lat = marker.serviceObject.position.lat();
+      marker.lng = marker.serviceObject.position.lng();
+      marker.infowindow.content = data[1].infowindow;
+      rewriteSortPolylines();
+    }
 
     var location = data[0];
     var view = data[1].partial;

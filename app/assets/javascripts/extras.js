@@ -61,14 +61,17 @@ function rewriteSortPolylines() {
   Gmaps.map_canvas.create_polylines();
 }
 
-function dropMarkerAnimation(location){
+function dropMarkerAnimation(location, infowindow){
   // drop animation and set option
-  var marker = Gmaps.map_canvas.markers[Gmaps.map_canvas.markers.length - 1];
-  marker.draggable = false;
-  marker.serviceObject.draggable = false;
-  marker.id = location.id;
-  marker.order = location.order;
-  marker.serviceObject.setAnimation(null);
+  if(location.latitude && location.longitude && Gmaps.map_canvas.markers.length){
+    var marker = Gmaps.map_canvas.markers[Gmaps.map_canvas.markers.length - 1];
+    marker.draggable = false;
+    marker.serviceObject.draggable = false;
+    marker.id = location.id;
+    marker.order = location.order;
+    marker.serviceObject.setAnimation(null);
+    marker.infowindow.content = infowindow;
+  }
 }
 
 var fixHelper = function(e, ui) {
@@ -83,20 +86,24 @@ function setEditableMarker(id) {
   $.each(Gmaps.map_canvas.markers, function(index, value) {
     if(id == value.id){
       marker = value;
+
+      draggedMarker(marker);
+
+      marker.serviceObject.setAnimation(google.maps.Animation.BOUNCE);
+      marker.serviceObject.draggable = true;
+      window.editableMarker = marker;
+
       return false;
     }
   });
-  marker.serviceObject.setAnimation(google.maps.Animation.BOUNCE);
-  marker.serviceObject.draggable = true;
-  window.editableMarker = marker;
 }
 
 function getMarker(id) {
-  var marker;
+  var marker = false;
   $.each(Gmaps.map_canvas.markers, function(index, value) {
     if(id == value.id){
       marker = value;
-      return false;
+      return marker;
     }
   });
   return marker;
@@ -104,9 +111,11 @@ function getMarker(id) {
 
 function disableEditableMarker(){
   var marker = window.editableMarker;
-  window.editableMarker = null;
-  marker.serviceObject.setAnimation(null);
-  marker.serviceObject.draggable = false;
+  if(marker){
+    window.editableMarker = undefined;
+    marker.serviceObject.setAnimation(null);
+    marker.serviceObject.draggable = false;
+  }
   return marker;
 }
 
@@ -138,9 +147,11 @@ function rewriteMapByOrder(){
 }
 
 function draggedMarker(marker) {
-  google.maps.event.addListener(marker.serviceObject, 'dragend', function(pos){
-    updateLocationPosition(pos.latLng);
-  });
+  if(marker){
+    google.maps.event.addListener(marker.serviceObject, 'dragend', function(pos){
+      updateLocationPosition(pos.latLng);
+    });
+  }
 }
 
 function addNewLocationMarker(lat, lng){
@@ -148,11 +159,21 @@ function addNewLocationMarker(lat, lng){
   $('#location_longitude').val(lng);
 
   var markers = [];
-  markers.push({
+
+
+  var markerOpt = {
+    description: '',
     lat: lat,
     lng: lng,
     draggable: true
-  });
+  };
+
+  if(window.markerId){
+    markerOpt.id = window.markerId.id;
+    markerOpt.order = window.markerId.order;
+  }
+
+  markers.push(markerOpt);
 
   Gmaps.map_canvas.addMarkers(markers);
 
