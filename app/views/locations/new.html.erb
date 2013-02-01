@@ -2,15 +2,17 @@
   <h1><%= @tour.title %></h1>
 </div>
 
-<ul class="breadcrumb">
-  <li><%= link_to 'Home', root_path %><span class="divider">/</span></li>
-  <li><%= link_to 'Tour', edit_tour_path(@tour.id) %> <span class="divider">/</span></li>
-  <li class="active">Create itinerary</li>
-</ul>
 
 <div class="row-fluid">
-  <div class="span5" id="action-form">
-    <%= render 'form' %>
+  <div class="span5">
+    <ul class="breadcrumb">
+      <li><%= link_to 'Home', root_path %><span class="divider">/</span></li>
+      <li><%= link_to 'Tour', edit_tour_path(@tour.id) %> <span class="divider">/</span></li>
+      <li class="active">Create itinerary</li>
+    </ul>
+    <div id="action-form">
+      <%= render 'form' %>
+    </div>
   </div>
   <div class="span7">
     <div id="location-status"></div>
