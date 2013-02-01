@@ -16,12 +16,13 @@ $(document).ready(function(){
   // })
   $('#new_location')
   .live('ajax:success', function(evt, data, status, xhr){
+    console.log(data);
     var location = data[0];
     var partial = data[1].partial;
     $('table#tour_locations_list').append(partial);
     // $('#main_wrap').prepend('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>Added</div>');
     resetLocationForm();
-    dropMarkerAnimation(location);
+    dropMarkerAnimation(location, data[1].infovindow);
     rewriteAllPolylines();
   })
   .live('ajax:error', function( xhr, textStatus, errorThrown ){
@@ -85,9 +86,13 @@ $(document).ready(function(){
   .live('ajax:success', function(evt, data, status, xhr){
 
     var marker = disableEditableMarker();
-    marker.lat = marker.serviceObject.position.lat();
-    marker.lng = marker.serviceObject.position.lng();
-    rewriteSortPolylines();
+
+    if(marker){
+      marker.lat = marker.serviceObject.position.lat();
+      marker.lng = marker.serviceObject.position.lng();
+      marker.infowindow.content = data[1].infowindow;
+      rewriteSortPolylines();
+    }
 
     var location = data[0];
     var view = data[1].partial;
