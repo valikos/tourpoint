@@ -16,6 +16,7 @@ $(document).ready(function(){
   // })
   $('#new_location')
   .live('ajax:success', function(evt, data, status, xhr){
+    console.log(data);
     var location = data[0];
     var partial = data[1].partial;
 
@@ -93,8 +94,6 @@ $(document).ready(function(){
   .live('ajax:success', function(evt, data, status, xhr){
 
     var marker = disableEditableMarker();
-
-    console.log(marker);
 
     if(marker){
       marker.lat = marker.serviceObject.position.lat();
