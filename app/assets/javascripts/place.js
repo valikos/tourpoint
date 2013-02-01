@@ -4,32 +4,35 @@ $(document).ready(function(){
     var item = $('input[name=optionsRadios]:checked');
     if (item.length) {
       $('div#location-select').modal('hide');
-      // addNewLocationMarker($(item).data('lat'), $(item).data('lng'));
-      if($('#new_location').length){
-        addNewLocationMarker($(item).data('lat'), $(item).data('lng'));
-      }else{
-        replaceMarkerPosition($(item).data('lat'), $(item).data('lng'));
-      }
 
+      var editItem = $('[id^="edit_location_"]');
+
+      if(editItem.length){
+        var id = editItem[0].id.split('_')[2];
+        var marker = getMarker(id);
+        if(marker){
+          console.log('replace');
+          replaceMarkerPosition($(item).data('lat'), $(item).data('lng'));
+        }else{
+          console.log('add new');
+          addNewLocationMarker($(item).data('lat'), $(item).data('lng'));
+        }
+      } else {
+        addNewLocationMarker($(item).data('lat'), $(item).data('lng'));
+      }
+      // if($('#new_location').length){
+      // }else{
+      // }
       $('#places_location').val($(item).data('location'));
     }
   });
 
   $('#place_location')
-  .live('ajax:before', function(evt, xhr, settings){
-    // if($('#location_latitude').val !== '' && $('#location_longitude').val() !== ''){
-    //   return false;
-    // }
-  })
-  .live('ajax:error', function( xhr, textStatus, errorThrown ){
-    if($('div#alert-error').length === 0){
-      $('div#location-status').prepend(
-        "<div class=\"alert alert-error\" id=\"alert-error\">" +
-        "Location not found" +
-        "<div/>"
-      );
-    }
-  })
+  // .live('ajax:before', function(evt, xhr, settings){
+  //   // if($('#location_latitude').val !== '' && $('#location_longitude').val() !== ''){
+  //   //   return false;
+  //   // }
+  // })
   .live('ajax:success', function(evt, data, status, xhr){
     dropUndefinedMarker();
     clearErrorAlert();
@@ -50,11 +53,34 @@ $(document).ready(function(){
     } else if (data instanceof Array && data.length === 1) {
       lat = data[0].position.lat;
       lng = data[0].position.lng;
-      if($('#new_location').length){
+
+      var editItem = $('[id^="edit_location_"]');
+
+      if(editItem.length){
+        var id = editItem[0].id.split('_')[2];
+        var marker = getMarker(id);
+        if(marker){
+          console.log('replace');
+          replaceMarkerPosition(lat, lng);
+        }else{
+          console.log('add new');
+          addNewLocationMarker(lat, lng);
+        }
+      } else {
         addNewLocationMarker(lat, lng);
-      }else{
-        replaceMarkerPosition(lat, lng);
       }
+      // if($('#new_location').length){
+      // }else{
+      // }
+    }
+  })
+  .live('ajax:error', function( xhr, textStatus, errorThrown ){
+    if($('div#alert-error').length === 0){
+      $('div#location-status').prepend(
+        "<div class=\"alert alert-error\" id=\"alert-error\">" +
+        "Location not found" +
+        "<div/>"
+      );
     }
   });
 });
