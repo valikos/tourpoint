@@ -48,8 +48,8 @@ $(document).ready(function(){
         keyboard: false
       });
     } else if (data instanceof Array && data.length === 1) {
-      lat = data[0].data.geometry.location.lat;
-      lng = data[0].data.geometry.location.lng;
+      lat = data[0].position.lat;
+      lng = data[0].position.lng;
       if($('#new_location').length){
         addNewLocationMarker(lat, lng);
       }else{
