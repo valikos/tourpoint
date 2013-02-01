@@ -8,9 +8,11 @@ class LocationsController < ApplicationController
     @locations = @tour.locations.order("locations.order")
     @location = @tour.locations.build
     @markers = @locations.to_gmaps4rails do |location, marker|
-      marker.infowindow render_to_string(:partial => "/locations/infowindow", :locals => { :location => location })
+      marker.infowindow render_to_string(:partial => "/locations/infowindow",
+        :locals => { :location => location })
       marker.title(location.title)
-      marker.json({ id: location.id, order: location.order, title: location.title })
+      marker.json({ id: location.id, order: location.order,
+        title: location.title })
     end
     @polylines = "[#{@markers}]"
   end
@@ -21,8 +23,10 @@ class LocationsController < ApplicationController
     @location = @tour.locations.build(params[:location])
     @location.order = order
     if @location.save
-      partial = render_to_string(partial: 'locations/location', :locals => { location: @location })
-      render json: [@location, partial: partial], status: :created, location: tour_locations_path
+      partial = render_to_string(partial: 'locations/location',
+        :locals => { location: @location })
+      render json: [@location, partial: partial], status: :created,
+        location: tour_locations_path
     else
       render json: @location.errors, status: :unprocessable_entity
     end

@@ -29,11 +29,13 @@ function dropMarker(id) {
 }
 
 function dropUndefinedMarker() {
-  var last = Gmaps.map_canvas.markers.length - 1;
-  var marker = Gmaps.map_canvas.markers[last];
-  if (typeof marker.id === "undefined") {
-    marker.serviceObject.setMap(null);
-    Gmaps.map_canvas.markers.splice(last, 1);
+  if(Gmaps.map_canvas.markers.length){
+    var last = Gmaps.map_canvas.markers.length - 1;
+    var marker = Gmaps.map_canvas.markers[last];
+    if (typeof marker.id === "undefined") {
+      marker.serviceObject.setMap(null);
+      Gmaps.map_canvas.markers.splice(last, 1);
+    }
   }
 }
 

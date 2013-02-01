@@ -4,9 +4,7 @@ $(document).ready(function(){
     var item = $('input[name=optionsRadios]:checked');
     if (item.length) {
       $('div#location-select').modal('hide');
-
       // addNewLocationMarker($(item).data('lat'), $(item).data('lng'));
-
       if($('#new_location').length){
         addNewLocationMarker($(item).data('lat'), $(item).data('lng'));
       }else{
@@ -41,8 +39,8 @@ $(document).ready(function(){
       for (var i in data) {
         $('div#location-select-option').append(
           "<label class=\"radio\">" +
-            "<input type=\"radio\" data-location=\"" + data[i].data.formatted_address + "\" data-lat=\"" + data[i].data.geometry.location.lat + "\" data-lng=\"" + data[i].data.geometry.location.lng + "\" name=\"optionsRadios\" id=\"optionsRadios" + i + "\" value=\"" + i + "\" >" +
-            data[i].data.formatted_address +
+            "<input type=\"radio\" data-location=\"" + data[i].name + "\" data-lat=\"" + data[i].position.lat + "\" data-lng=\"" + data[i].position.lng + "\" name=\"optionsRadios\" id=\"optionsRadios" + i + "\" value=\"" + i + "\" >" +
+            data[i].name +
           "</label>"
         );
       }
