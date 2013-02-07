@@ -25,7 +25,7 @@ class ToursController < ApplicationController
   def create
     @tour = Tour.new(params[:tour])
     if @tour.save
-      redirect_to new_tour_location_url(@tour), notice: 'Tour created'
+      redirect_to itinerary_tour_url(@tour.id), notice: 'Tour created'
     else
       render :new
     end

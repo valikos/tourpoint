@@ -29,7 +29,6 @@ class LocationsController < ApplicationController
   def update
     @tour = Tour.find(params[:tour_id])
     @location = @tour.locations.find(params[:id])
-
     if @location.update_attributes(params[:location])
       partial = render_to_string(partial: 'locations/location', :locals => { location: @location })
       infovindow = render_to_string(:partial => "/locations/infowindow", :locals => { :location => @location })
@@ -58,13 +57,5 @@ class LocationsController < ApplicationController
       Location.update_all({ order: index + 1 }, { id: id } )
     end
     render nothing: true
-  end
-
-private
-
-  def current_location
-    @current_location = {}
-    @current_location['lat'] = request.location.latitude rescue 0
-    @current_location['lng'] = request.location.longitude rescue 0
   end
 end
