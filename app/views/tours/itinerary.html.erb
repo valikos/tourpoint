@@ -36,12 +36,6 @@
     </thead>
     <tbody data-update-url="<%= sort_tour_locations_path(@tour.id) %>">
       <%= render @locations %>
-      <% if @locations.empty? %>
-      <tr>
-        <td>Empty</td>
-        <td></td>
-      </tr>
-      <% end %>
     </tbody>
   </table>
 </div>

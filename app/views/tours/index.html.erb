@@ -23,7 +23,7 @@
         <td><%= tour.end_date %></td>
         <td>
           <nobr>
-            <%= link_to 'Edit locations', new_tour_location_path(tour), class: 'btn btn-mini btn-info' %>
+            <%= link_to 'Edit locations', itinerary_tour_path(tour), class: 'btn btn-mini btn-info' %>
             <%= link_to 'Edit tour datails',
                         edit_tour_path(tour), :class => 'btn btn-mini' %>
             <%= link_to 'Delete tour',
