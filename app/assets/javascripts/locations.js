@@ -14,18 +14,13 @@ $(document).ready(function(){
   // .live('ajax:failure', function(e){
   //   console.log('failure');
   // })
+
   $('#new_location')
   .live('ajax:success', function(evt, data, status, xhr){
-    console.log(data);
     var location = data[0];
     var partial = data[1].partial;
 
-    if(location.latitude && location.longitude){
-      window.QWERTYUIO = true;
-    }
-
     $('table#tour_locations_list').append(partial);
-    // $('#main_wrap').prepend('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>Added</div>');
 
     resetLocationForm();
     dropMarkerAnimation(location, data[1].infovindow);
@@ -51,16 +46,20 @@ $(document).ready(function(){
   });
 
   $('#closeEditLocationInTourItenerary').live('click', function(e){
-    if(window.QWERTYUIO){
-      window.QWERTYUIO = undefined;
-      marker = disableEditableMarker();
-      marker.serviceObject.setPosition(new google.maps.LatLng(marker.lat, marker.lng));
+    marker = getMarker(window.editedLocation.id);
+    disableEditableMarker(marker);
+    if(marker){
+      marker.serviceObject.setPosition(new google.maps.LatLng(window.editedLocation.latitude, window.editedLocation.longitude));
     }
     $('#action-form').html('').append(window.newLocationForm.children());
+
+    window.editedLocation = undefined;
+    window.newLocationForm = undefined;
+
     clearSuccessAlert();
   });
 
-  // remove itinerary actions
+  // remove itinerary
   $('.remove_itinerary')
   .live('ajax:success', function(evt, data, status, xhr){
     $('#location_' + data.id).remove();
@@ -68,19 +67,23 @@ $(document).ready(function(){
     rewriteSortPolylines();
   });
 
-  // location actions
-  // get form
-  $('.start_edit_location').
-  live('ajax:success', function(evt, data, status, xhr){
-    console.log(data);
+  // build edition form
+  $('.start_edit_location')
+  .live('ajax:success', function(evt, data, status, xhr){
+    disablePreviousMarker();
     var marker = data[0];
     var form = data[1].action_form;
+    window.editedLocation = marker;
 
-    setEditableMarker(marker.id);
+    if(getMarker(data[0].id)){
+      setEditableMarker(marker.id);
+    }
 
-    window.newLocationForm = $('#action-form').clone();
+    if (window.newLocationForm == null) {
+      window.newLocationForm = $('#action-form').clone();
+    }
+    // set new form
     $('#action-form').html(form);
-
     if($('div#alert-success').length === 0){
       $('div#location-status').prepend(
         "<div class=\"alert alert-success\" id=\"alert-success\">" +
@@ -89,11 +92,12 @@ $(document).ready(function(){
       );
     }
   });
+
   // location update
   $('[id^=edit_location_]')
   .live('ajax:success', function(evt, data, status, xhr){
-
-    var marker = disableEditableMarker();
+    var marker = getMarker(window.editedLocation.id);
+    disableEditableMarker(marker);
 
     if(marker){
       marker.lat = marker.serviceObject.position.lat();
@@ -106,6 +110,9 @@ $(document).ready(function(){
     var view = data[1].partial;
     $('#location_' + location.id).replaceWith(view);
     $('#action-form').html('').append(window.newLocationForm.children());
+
+    window.editedLocation = undefined;
+    window.newLocationForm = undefined;
 
     clearSuccessAlert();
   })
