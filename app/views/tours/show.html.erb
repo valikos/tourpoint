@@ -20,7 +20,7 @@
           :markers => { :data => @markers, :options => { :rich_marker => true } },
           :polylines => { :data => @polylines }
     ) %>
-    <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_tour_path(@tour), :class => 'btn btn-info btn-block' %>
+    <%= link_to 'Edit itinerary', itinerary_tour_path(@tour), :class => 'btn btn-info btn-block' %>
   </div>
   <div class="span7">
     <div class="pull-right span4 well">

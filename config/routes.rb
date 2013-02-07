@@ -5,9 +5,10 @@ Tourhop::Application.routes.draw do
   resource :place, only: :create
 
   resources :tours do
-    resources :locations, except: [:index, :show] do
+    resources :locations, except: [:index, :show, :new] do
       collection { post :sort }
     end
+    member { get :itinerary }
   end
 
 

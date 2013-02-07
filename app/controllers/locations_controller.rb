@@ -1,21 +1,6 @@
 class LocationsController < ApplicationController
 
   respond_to :json, only: [:destroy]
-  before_filter :current_location, only: [:new, :edit]
-
-  def new
-    @tour = Tour.find(params[:tour_id])
-    @locations = @tour.locations.order("locations.order")
-    @location = @tour.locations.build
-    @markers = @locations.to_gmaps4rails do |location, marker|
-      marker.infowindow render_to_string(:partial => "/locations/infowindow",
-        :locals => { :location => location })
-      marker.title(location.title)
-      marker.json({ id: location.id, order: location.order,
-        title: location.title })
-    end
-    @polylines = "[#{@markers}]"
-  end
 
   def create
     @tour = Tour.find(params[:tour_id])
