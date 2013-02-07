@@ -2,7 +2,6 @@
   <h1><%= @tour.title %></h1>
 </div>
 
-
 <div class="row-fluid">
   <div class="span5">
     <ul class="breadcrumb">
@@ -11,7 +10,7 @@
       <li class="active">Create itinerary</li>
     </ul>
     <div id="action-form">
-      <%= render 'form' %>
+      <%= render partial: 'locations/form' %>
     </div>
   </div>
   <div class="span7">
@@ -35,7 +34,7 @@
         <th style="width:50px"></th>
       </tr>
     </thead>
-    <tbody data-update-url="<%= sort_tour_locations_path(params[:tour_id]) %>">
+    <tbody data-update-url="<%= sort_tour_locations_path(@tour.id) %>">
       <%= render @locations %>
       <% if @locations.empty? %>
       <tr>

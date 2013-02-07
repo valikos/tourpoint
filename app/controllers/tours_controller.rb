@@ -1,7 +1,7 @@
 class ToursController < ApplicationController
 
   before_filter :get_tour, only: [:show, :edit, :update, :destroy]
-  before_filter :current_location, only: :show
+  before_filter :current_location, only: [:show, :itinerary]
 
   def index
     @tours = Tour.all
@@ -44,6 +44,20 @@ class ToursController < ApplicationController
 
   def destroy
     @tour.destroy and redirect_to tours_path, notice: 'Tour deleted'
+  end
+
+  def itinerary
+    @tour = Tour.find(params[:id])
+    @locations = @tour.locations.order("locations.order")
+    @location = @tour.locations.build
+    @markers = @locations.to_gmaps4rails do |location, marker|
+      marker.infowindow render_to_string(:partial => "/locations/infowindow",
+        :locals => { :location => location })
+      marker.title(location.title)
+      marker.json({ id: location.id, order: location.order,
+        title: location.title })
+    end
+    @polylines = "[#{@markers}]"
   end
 
 private
