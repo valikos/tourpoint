@@ -86,13 +86,10 @@ function setEditableMarker(id) {
   $.each(Gmaps.map_canvas.markers, function(index, value) {
     if(id == value.id){
       marker = value;
-
       draggedMarker(marker);
-
       marker.serviceObject.setAnimation(google.maps.Animation.BOUNCE);
       marker.serviceObject.draggable = true;
-      window.editableMarker = marker;
-
+      window.editedMarker = marker;
       return false;
     }
   });
@@ -109,14 +106,21 @@ function getMarker(id) {
   return marker;
 }
 
-function disableEditableMarker(){
-  var marker = window.editableMarker;
+function disablePreviousMarker(){
+  var marker;
+  if(window.editedLocation != null){
+    marker = getMarker(window.editedLocation.id);
+    disableEditableMarker(marker);
+  }
+}
+
+function disableEditableMarker(marker){
+  var location = window.editedLocation;
   if(marker){
-    window.editableMarker = undefined;
+    window.editedMarker = undefined;
     marker.serviceObject.setAnimation(null);
     marker.serviceObject.draggable = false;
   }
-  return marker;
 }
 
 function rewriteMapByOrder(){
@@ -157,7 +161,6 @@ function draggedMarker(marker) {
 function addNewLocationMarker(lat, lng){
   $('#location_latitude').val(lat);
   $('#location_longitude').val(lng);
-
   var markers = [];
 
   var markerOpt = {
@@ -166,10 +169,9 @@ function addNewLocationMarker(lat, lng){
     lng: lng,
     draggable: true
   };
-
-  if(window.markerId){
-    markerOpt.id = window.markerId.id;
-    markerOpt.order = window.markerId.order;
+  if(window.editedLocation){
+    markerOpt.id = window.editedLocation.id;
+    markerOpt.order = window.editedLocation.order;
   }
 
   markers.push(markerOpt);
@@ -190,8 +192,9 @@ function addNewLocationMarker(lat, lng){
   }
 }
 
+// ???
 function replaceMarkerPosition(lat, lng){
-  var marker = window.editableMarker;
+  var marker = window.editedMarker;
   marker.serviceObject.setPosition(new google.maps.LatLng(lat, lng));
   $('#location_latitude').val(lat);
   $('#location_longitude').val(lng);
