@@ -1,12 +1,10 @@
 class LocationsController < ApplicationController
 
+  before_filter :find_tour, except: [:destroy, :sort]
   respond_to :json, only: [:destroy]
 
   def create
-    @tour = Tour.find(params[:tour_id])
-    order = @tour.locations.count + 1
     @location = @tour.locations.build(params[:location])
-    @location.order = order
     if @location.save
       partial = render_to_string(partial: 'locations/location',
         :locals => { location: @location })
@@ -20,14 +18,12 @@ class LocationsController < ApplicationController
   end
 
   def edit
-    @tour = Tour.find(params[:tour_id])
     @location = @tour.locations.find(params[:id])
     render json: [@location, action_form: render_to_string(partial: 'locations/form')],
       status: :accepted
   end
 
   def update
-    @tour = Tour.find(params[:tour_id])
     @location = @tour.locations.find(params[:id])
     if @location.update_attributes(params[:location])
       partial = render_to_string(partial: 'locations/location', :locals => { location: @location })
@@ -39,16 +35,12 @@ class LocationsController < ApplicationController
   end
 
   def destroy
-    begin
-    @location = Location.find(params[:id], conditions: { tour_id: params[:tour_id] })
-    rescue ActiveRecord::RecordNotFound
-      head :no_content
+    @location = Location.where(id: params[:id], tour_id: params[:tour_id]).first
+    # @location = Location.find(params[:id], conditions: { tour_id: params[:tour_id] })
+    if @location && @location.destroy
+      render json: @location, status: :accepted
     else
-      if @location.destroy
-        render json: @location, status: :accepted
-      else
-        head :no_content
-      end
+      head :no_content
     end
   end
 
@@ -57,5 +49,11 @@ class LocationsController < ApplicationController
       Location.update_all({ order: index + 1 }, { id: id } )
     end
     render nothing: true
+  end
+
+private
+
+  def find_tour
+    @tour = Tour.find(params[:tour_id])
   end
 end

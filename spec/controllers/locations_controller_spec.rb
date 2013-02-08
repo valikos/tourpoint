@@ -1,66 +1,33 @@
 require 'spec_helper'
 
 describe LocationsController do
-
-  describe "GET 'new'" do
-    let(:tour){ mock(Tour) }
-    let(:location){ mock_model(Location) }
-
-    before do
-      Tour.stub(:find).with("1").and_return(tour)
-      tour_locations = mock(Object)
-      locations = tour.stub(:locations).and_return( tour_locations )
-      tour_locations.stub(:order).with("locations.order").and_return([])
-      tour_locations.stub(:build).and_return(location)
-
-      get :new, tour_id: 1
-    end
-
-    it { should assign_to(:tour) }
-    it { should assign_to(:locations) }
-    it { should assign_to(:location) }
-    it { should respond_with(:success) }
-    it { should respond_with_content_type(:html) }
-    it { should render_template(:new) }
-  end
-
   describe "POST 'create'" do
     context "factory" do
       let(:tour) { create :tour }
-
       context "on success" do
-        let(:locations) { tour.locations.count }
         let(:location) { attributes_for :location, tour_id: tour.id }
-
         context "database" do
           it "should change Location count by 1" do
             expect{ post :create, tour_id: tour.id, location: location }.to change(Location, :count).by(1)
           end
         end
-
         before do
           post :create, tour_id: tour.id, location: location
         end
-
         it { should assign_to(:tour) }
         it { should assign_to(:location) }
         it { should respond_with(:created) }
         it { should respond_with_content_type(:json) }
       end
-
       context "on failure" do
-        let(:locations) { tour.locations.count }
-
         context "database" do
-          it "should change Location count by 1" do
-            expect{ post :create, tour_id: tour.id, location: {} }.to_not change(Location, :count).by(1)
+          it "should not change Location count" do
+            expect{ post :create, tour_id: tour.id, location: {} }.to_not change(Location, :count)
           end
         end
-
         before do
           post :create, tour_id: tour.id, location: {}
         end
-
         it { should assign_to(:tour) }
         it { should assign_to(:location) }
         it { should respond_with(:unprocessable_entity) }
@@ -68,102 +35,82 @@ describe LocationsController do
       end
     end
   end
-
   describe "GET 'edit'" do
     let(:location){ create :location}
     before do
       get :edit, tour_id: location.tour.id, id: location.id
     end
-
     it { should assign_to(:tour) }
     it { should assign_to(:location) }
     it { should respond_with(:accepted) }
     it { should respond_with_content_type(:json) }
   end
-
   describe "PUT 'update'" do
     let(:tour) { create :tour }
     let(:location) { create :location, tour: tour }
-
     context "on success" do
       let(:location_updates) { attributes_for :location }
       before do
         put :update, tour_id: tour.id, id: location.id, location: location_updates
       end
-
       it { should assign_to(:tour) }
       it { should assign_to(:location) }
       it { should respond_with(:ok) }
       it { should respond_with_content_type(:json) }
     end
-
     context "on failure" do
       let(:location_updates) { attributes_for :location, title: '', description: '' }
       before do
         put :update, tour_id: tour.id, id: location.id, location: location_updates
       end
-
       it { should assign_to(:tour) }
       it { should assign_to(:location) }
       it { should respond_with(:unprocessable_entity) }
       it { should respond_with_content_type(:json) }
     end
   end
-
   describe "DELETE 'destroy'" do
     let(:tour) { create :tour }
     context "on success" do
       let(:location) { create :location, tour_id: tour.id }
-
       before do
         delete :destroy, tour_id: tour.id, id: location.id
       end
-
       it { should assign_to(:location) }
       it { should respond_with(:accepted) }
       it { should respond_with_content_type(:json) }
     end
     context "on failure" do
       let(:location) { create :location, tour_id: tour.id }
-
       context "missing or invalid tour id" do
         before do
           delete :destroy, tour_id: '', id: location.id
         end
-
         it { should respond_with(:no_content) }
       end
-
       context "missing or invalid location id" do
         before do
           delete :destroy, tour_id: tour.id, id: ''
         end
-
         it { should respond_with(:no_content) }
       end
-
       context "missing all attributes" do
         before do
           delete :destroy, tour_id: '', id: ''
         end
-
         it { should respond_with(:no_content) }
       end
     end
   end
-
   describe "POST 'sort'" do
     let(:tour) { create :tour }
-
     let(:loc1) { create :location, tour_id: tour.id }
     let(:loc2) { create :location, tour_id: tour.id }
     let(:loc3) { create :location, tour_id: tour.id }
     let(:loc4) { create :location, tour_id: tour.id }
-
     before do
       post :sort, tour_id: tour.id, location: [loc1.id, loc2.id, loc3.id, loc4.id]
     end
-
     it { loc1.reload.order.should == 1 }
     it { loc2.reload.order.should == 2 }
     it { loc3.reload.order.should == 3 }
