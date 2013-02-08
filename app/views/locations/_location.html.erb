@@ -4,13 +4,15 @@
     <%= location.description %>
   </td>
   <td>
-    <%= link_to edit_tour_location_path(@tour.id, location.id), remote: true, class: 'start_edit_location', title: 'Edit' do %>
-      <i class="icon-edit"></i>
-    <% end %>
-    <span class="drag-handle icon-move" title="Reorder"></span>
-    <%= link_to tour_location_path(tour_id: @tour.id, id: location.id), method: :delete, class: 'remove_itinerary',
-      data: { confirm: 'Are you sure?', remote: true }, title: 'Delete' do %>
-        <i class="icon-trash"></i>
-    <% end %>
+    <nobr>
+      <%= link_to edit_tour_location_path(@tour.id, location.id), remote: true, class: 'start_edit_location', title: 'Edit' do %>
+        <i class="icon-edit"></i>
+      <% end %>
+      <span class="drag-handle icon-move" title="Reorder"></span>
+      <%= link_to tour_location_path(tour_id: @tour.id, id: location.id), method: :delete, class: 'remove_itinerary',
+        data: { confirm: 'Are you sure?', remote: true , location: location.id }, title: 'Delete' do %>
+          <i class="icon-trash"></i>
+      <% end %>
+    </nobr>
   </td>
 <% end %>
