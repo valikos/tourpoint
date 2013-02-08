@@ -1,0 +1,41 @@
+<%= form_for([@tour, @location], remote: true) do |f| %>
+  <% if @location.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@location.errors.count, "error") %> prohibited this location from being saved:</h2>
+      <ul>
+      <% @location.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= f.hidden_field :latitude %>
+  <%= f.hidden_field :longitude %>
+  <div class="control-group">
+    <%#= f.label :title, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :title, :class => 'text_field span12', placeholder: 'Location title' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%#= f.label :description, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_area :description, :class => 'text_field span12', rows: 9, placeholder: 'Location description' %>
+    </div>
+  </div>
+<% end %>
+<%= render 'place/form' %>
+<% if @location.id.blank? %>
+  <%= button_tag(:type => 'button', class: 'btn btn-info btn-block', id: 'addLocationToTourItenerary') do %>
+    <%= content_tag(:strong, 'Add location to tour itenerary') %>
+  <% end %>
+<% else %>
+  <div>
+    <%= button_tag(:type => 'button', class: 'btn btn-info span8', id: 'updateLocationInTourItenerary') do %>
+      <%= content_tag(:strong, 'Update location') %>
+    <% end %>
+    <%= button_tag(:type => 'button', class: 'btn btn-primary span4', id: 'closeEditLocationInTourItenerary') do %>
+      <%= content_tag(:strong, 'Cancel') %>
+    <% end %>
+  </div>
+<% end %>

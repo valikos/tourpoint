@@ -5,42 +5,39 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:title) %></th>
-      <th><%= model_class.human_attribute_name(:description) %></th>
-      <th><%= model_class.human_attribute_name(:price) %></th>
-      <th><%= model_class.human_attribute_name(:active) %></th>
-      <th><%= model_class.human_attribute_name(:start_date) %></th>
-      <th><%= model_class.human_attribute_name(:end_date) %></th>
-      <!-- <th><%= model_class.human_attribute_name(:created_at) %></th> -->
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Price</th>
+      <th>Start date</th>
+      <th>End date</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
     <% @tours.each do |tour| %>
       <tr>
-        <td><%= link_to tour.id, tour_path(tour) %></td>
-        <td><%= tour.title %></td>
+        <td><%= link_to tour.title, tour_path(tour) %></td>
         <td><%= tour.description %></td>
         <td><%= tour.price %></td>
-        <td><%= tour.active %></td>
-        <td><%= tour.start_date %></td>
-        <td><%= tour.end_date %></td>
-        <!-- <td><%=l tour.created_at %></td> -->
+        <td><nobr><%= tour.start_date %><nobr></td>
+        <td><nobr><%= tour.end_date %><nobr></td>
         <td>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_tour_path(tour), :class => 'btn btn-mini' %>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                      tour_path(tour),
-                      :method => :delete,
-                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                      :class => 'btn btn-mini btn-danger' %>
+          <nobr>
+            <%= link_to 'Edit locations', itinerary_tour_path(tour), class: 'btn btn-mini btn-info' %>
+            <%= link_to 'Edit tour datails',
+                        edit_tour_path(tour), :class => 'btn btn-mini' %>
+            <%= link_to 'Delete tour',
+                        tour_path(tour),
+                        :method => :delete,
+                        :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                        :class => 'btn btn-mini btn-danger' %>
+          </nobr>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<%= link_to t('.new', :default => t("helpers.links.new")),
+<%= link_to 'New tour',
             new_tour_path,
             :class => 'btn btn-primary' %>

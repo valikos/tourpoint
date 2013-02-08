@@ -1,0 +1,26 @@
+<h1>Listing locations</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @locations.each do |location| %>
+  <tr>
+    <td><%= link_to 'Show', location %></td>
+    <td><%= link_to 'Edit', edit_location_path(location) %></td>
+    <td><%= link_to 'Destroy', location, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'New Location', "#", class: 'add-marker btn btn-info' %>
+<%= link_to 'Markers', "#", class: 'markers btn btn-info' %>
+
+<div id="test_map" style="height:300px; width:700px;"></div>
+
+<br />
+
+<%= link_to 'New Location', new_location_path %>
