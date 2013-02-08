@@ -9,7 +9,7 @@ class Tour < ActiveRecord::Base
   validates :price, numericality: { greater_than_or_equal_to: 0.01 }
   validates :start_date, presence: true
   validates :end_date, presence: true
-  validate :validate_end_date
+  validate :validate_end_date, if: :presence_dates
 
   def duration
     (self.end_date - self.start_date).to_i + 1
@@ -17,8 +17,11 @@ class Tour < ActiveRecord::Base
 
 private
 
-  def validate_end_date
-    errors.add(:base, "Invalid end date") if end_date < start_date
+  def presence_dates
+    start_date.present? && end_date.present?
   end
 
+  def validate_end_date
+    errors.add(:base, "Invalid dates") if end_date < start_date
+  end
 end
