@@ -40,4 +40,18 @@ $(document).ready(function(e){
     },
     helper: fixHelper
   });
+
+  /* scroller */
+  $(window).scroll(function(){
+    if ($(this).scrollTop() > 100) {
+      $('.scrollup').fadeIn(700);
+    } else {
+      $('.scrollup').fadeOut(700);
+    }
+  });
+
+  $('.scrollup').click(function(e){
+    e.preventDefault();
+    $("html, body").animate({ scrollTop: 0 }, 600);
+  });
 });
