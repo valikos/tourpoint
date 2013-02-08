@@ -1,12 +1,9 @@
 $(document).ready(function(){
-
   $('#save-location-select').on('click', function(e){
     var item = $('input[name=optionsRadios]:checked');
     if (item.length) {
       $('div#location-select').modal('hide');
-
       var editItem = $('[id^="edit_location_"]');
-
       if(editItem.length){
         var id = editItem[0].id.split('_')[2];
         var marker = getMarker(id);
@@ -18,19 +15,10 @@ $(document).ready(function(){
       } else {
         addNewLocationMarker($(item).data('lat'), $(item).data('lng'));
       }
-      // if($('#new_location').length){
-      // }else{
-      // }
       $('#places_location').val($(item).data('location'));
     }
   });
-
   $('#place_location')
-  // .live('ajax:before', function(evt, xhr, settings){
-  //   // if($('#location_latitude').val !== '' && $('#location_longitude').val() !== ''){
-  //   //   return false;
-  //   // }
-  // })
   .live('ajax:success', function(evt, data, status, xhr){
     dropUndefinedMarker();
     clearErrorAlert();
@@ -51,10 +39,8 @@ $(document).ready(function(){
     } else if (data instanceof Array && data.length === 1) {
       lat = data[0].position.lat;
       lng = data[0].position.lng;
-
       var editItem = $('[id^="edit_location_"]');
-
-      if(editItem.length){
+      if(editItem.length > 0){
         var id = editItem[0].id.split('_')[2];
         var marker = getMarker(id);
         if(marker){
@@ -65,9 +51,6 @@ $(document).ready(function(){
       } else {
         addNewLocationMarker(lat, lng);
       }
-      // if($('#new_location').length){
-      // }else{
-      // }
     }
   })
   .live('ajax:error', function( xhr, textStatus, errorThrown ){
