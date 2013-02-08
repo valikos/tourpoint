@@ -7,6 +7,9 @@ $(document).ready(function(){
     resetLocationForm();
     dropMarkerAnimation(location, data[1].infovindow);
     rewriteAllPolylines();
+    $('#createdAlert').fadeIn(500, function(){
+      $('#createdAlert').delay(1500).fadeOut(500);
+    });
   })
   .live('ajax:error', function( xhr, textStatus, errorThrown ){
     var error = JSON.parse(textStatus.responseText);
@@ -35,16 +38,25 @@ $(document).ready(function(){
     window.newLocationForm = undefined;
     clearSuccessAlert();
   });
+
   // remove itinerary
   $('.remove_itinerary')
+  .live('ajax:before', function(e){
+    var edited = $(this)[0].dataset.location;
+    if(window.editedLocation != null && window.editedLocation.id == edited){
+      return false;
+    }
+  })
   .live('ajax:success', function(evt, data, status, xhr){
     $('#location_' + data.id).remove();
     dropMarker(data.id);
     rewriteSortPolylines();
   });
+
   // build edition form
   $('.start_edit_location')
   .live('ajax:before', function(e){
+    $("html, body").animate({ scrollTop: 0 }, 600);
     if(window.editedLocation != null){
       return false;
     }
@@ -90,6 +102,9 @@ $(document).ready(function(){
     window.editedLocation = undefined;
     window.newLocationForm = undefined;
     clearSuccessAlert();
+    $('#updatedAlert').fadeIn(500, function(){
+      $('#updatedAlert').delay(1500).fadeOut(500);
+    });
   })
   .live('ajax:error', function(xhr, textStatus, errorThrown){
     var error = JSON.parse(textStatus.responseText);

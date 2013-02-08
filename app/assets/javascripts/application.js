@@ -19,7 +19,6 @@
 //= require_tree .
 
 $(document).ready(function(e){
-
   $("#tour_start_date").datepicker({
     'format': 'yyyy-mm-dd',
     'weekStart': 0,
@@ -39,19 +38,5 @@ $(document).ready(function(e){
       rewriteSortPolylines();
     },
     helper: fixHelper
-  });
-
-  /* scroller */
-  $(window).scroll(function(){
-    if ($(this).scrollTop() > 100) {
-      $('.scrollup').fadeIn(700);
-    } else {
-      $('.scrollup').fadeOut(700);
-    }
-  });
-
-  $('.scrollup').click(function(e){
-    e.preventDefault();
-    $("html, body").animate({ scrollTop: 0 }, 600);
   });
 });
