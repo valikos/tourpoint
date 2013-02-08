@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130129150535) do
+ActiveRecord::Schema.define(:version => 20130208090652) do
 
   create_table "locations", :force => true do |t|
     t.string   "title",       :null => false
@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(:version => 20130129150535) do
 
   create_table "tours", :force => true do |t|
     t.string   "title"
-    t.string   "description"
+    t.text     "description"
     t.decimal  "price",       :precision => 8, :scale => 2
     t.boolean  "active",                                    :default => true
     t.date     "start_date"
