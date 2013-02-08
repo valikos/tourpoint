@@ -6,8 +6,11 @@ class Location < ActiveRecord::Base
 
   belongs_to :tour
 
-  validates :title, presence: true
+  validates :title, presence: true,
+    length: { maximum: 70 }
   validates :description, presence: true
+
+  after_create :set_location_order
 
   def position
     self.to_json(only: [:latitude, :longitude])
@@ -16,4 +19,13 @@ class Location < ActiveRecord::Base
   def position?
     latitude.present? && longitude.present?
   end
+
+private
+
+  def set_location_order
+    tour = self.tour
+    self.order = tour.locations.count
+    self.save!
+  end
+
 end

@@ -1,6 +1,6 @@
 class ToursController < ApplicationController
 
-  before_filter :get_tour, only: [:show, :edit, :update, :destroy]
+  before_filter :find_tour, only: [:show, :edit, :update, :destroy, :itinerary]
   before_filter :current_location, only: [:show, :itinerary]
 
   def index
@@ -36,7 +36,7 @@ class ToursController < ApplicationController
 
   def update
     if @tour.update_attributes(params[:tour])
-      redirect_to @tour, notice: 'Tour updated'
+      redirect_to itinerary_tour_url(@tour.id), notice: 'Tour updated'
     else
       render :edit
     end
@@ -47,7 +47,6 @@ class ToursController < ApplicationController
   end
 
   def itinerary
-    @tour = Tour.find(params[:id])
     @locations = @tour.locations.order("locations.order")
     @location = @tour.locations.build
     @markers = @locations.to_gmaps4rails do |location, marker|
@@ -62,7 +61,7 @@ class ToursController < ApplicationController
 
 private
 
-  def get_tour
+  def find_tour
     @tour = Tour.find(params[:id])
   end
 

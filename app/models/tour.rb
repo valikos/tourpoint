@@ -4,7 +4,8 @@ class Tour < ActiveRecord::Base
 
   has_many :locations, dependent: :destroy
 
-  validates :title, presence: true
+  validates :title, presence: true,
+    length: { maximum: 255 }
   validates :description, presence: true
   validates :price, numericality: { greater_than_or_equal_to: 0.01 }
   validates :start_date, presence: true
