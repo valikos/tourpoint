@@ -19,7 +19,7 @@ class ToursController < ApplicationController
   end
 
   def new
-    @tour = Tour.new
+    @tour = Tour.new(active: false)
   end
 
   def create

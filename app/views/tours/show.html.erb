@@ -5,22 +5,23 @@
   </h1>
 </div>
 
-<ul class="breadcrumb">
-  <li><%= link_to 'Home', root_path %><span class="divider">/</span></li>
-  <li><%= link_to 'Tour', edit_tour_path(@tour.id) %> <span class="divider">/</span></li>
-  <li><%= link_to 'Itinerary', itinerary_tour_path(@tour.id) %> <span class="divider">/</span></li>
-  <li class="active">Preview</li>
-</ul>
 
 <div id="tour-info" class="row-fluid">
   <div class="span5">
+    <ul class="breadcrumb">
+      <li><%= link_to 'Home', root_path %><span class="divider">/</span></li>
+      <li><%= link_to 'Tour', edit_tour_path(@tour.id) %> <span class="divider">/</span></li>
+      <li><%= link_to 'Itinerary', itinerary_tour_path(@tour.id) %> <span class="divider">/</span></li>
+      <li class="active">Preview</li>
+    </ul>
     <%= gmaps(
           :map_options => { :container_class => "map_container", :id => "map_canvas", :provider_key => ENV["GOOGLE_KEY"],
           :center_latitude => @current_location['lat'], :center_longitude => @current_location['lng'] },
           :markers => { :data => @markers, :options => { :rich_marker => true } },
           :polylines => { :data => @polylines }
     ) %>
-    <%= link_to 'Edit itinerary', itinerary_tour_path(@tour.id), :class => 'btn btn-info btn-block' %>
+    <hr/>
+    <%= link_to 'Edit', itinerary_tour_path(@tour.id), :class => 'btn btn-info btn-block' %>
   </div>
   <div class="span7">
     <div class="pull-right span4 well">
