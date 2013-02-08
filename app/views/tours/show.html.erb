@@ -8,7 +8,7 @@
 <ul class="breadcrumb">
   <li><%= link_to 'Home', root_path %><span class="divider">/</span></li>
   <li><%= link_to 'Tour', edit_tour_path(@tour.id) %> <span class="divider">/</span></li>
-  <li><%= link_to 'Itinerary', new_tour_location_path(@tour.id) %> <span class="divider">/</span></li>
+  <li><%= link_to 'Itinerary', itinerary_tour_path(@tour.id) %> <span class="divider">/</span></li>
   <li class="active">Preview</li>
 </ul>
 
@@ -20,7 +20,7 @@
           :markers => { :data => @markers, :options => { :rich_marker => true } },
           :polylines => { :data => @polylines }
     ) %>
-    <%= link_to 'Edit itinerary', itinerary_tour_path(@tour), :class => 'btn btn-info btn-block' %>
+    <%= link_to 'Edit itinerary', itinerary_tour_path(@tour.id), :class => 'btn btn-info btn-block' %>
   </div>
   <div class="span7">
     <div class="pull-right span4 well">

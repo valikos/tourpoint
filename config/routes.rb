@@ -1,7 +1,5 @@
 Tourhop::Application.routes.draw do
 
-  root :to => 'tours#index'
-
   resource :place, only: :create
 
   resources :tours do
@@ -11,6 +9,7 @@ Tourhop::Application.routes.draw do
     member { get :itinerary }
   end
 
+  root :to => 'tours#index'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -19,8 +19,8 @@
         <td><%= link_to tour.title, tour_path(tour) %></td>
         <td><%= tour.description %></td>
         <td><%= tour.price %></td>
-        <td><%= tour.start_date %></td>
-        <td><%= tour.end_date %></td>
+        <td><nobr><%= tour.start_date %><nobr></td>
+        <td><nobr><%= tour.end_date %><nobr></td>
         <td>
           <nobr>
             <%= link_to 'Edit locations', itinerary_tour_path(tour), class: 'btn btn-mini btn-info' %>

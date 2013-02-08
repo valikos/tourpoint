@@ -142,7 +142,6 @@ function rewriteMapByOrder(){
   });
 
   Gmaps.map_canvas.markers = markers;
-  console.log(Gmaps.map_canvas.markers);
   Gmaps.map_canvas.markers_conf.rich_marker = true;
   Gmaps.map_canvas.create_markers();
 
@@ -154,6 +153,8 @@ function draggedMarker(marker) {
   if(marker){
     google.maps.event.addListener(marker.serviceObject, 'dragend', function(pos){
       updateLocationPosition(pos.latLng);
+      marker.lat = pos.latLng.lat();
+      marker.lng = pos.latLng.lng();
     });
   }
 }
@@ -162,7 +163,6 @@ function addNewLocationMarker(lat, lng){
   $('#location_latitude').val(lat);
   $('#location_longitude').val(lng);
   var markers = [];
-
   var markerOpt = {
     description: '',
     lat: lat,
@@ -173,9 +173,7 @@ function addNewLocationMarker(lat, lng){
     markerOpt.id = window.editedLocation.id;
     markerOpt.order = window.editedLocation.order;
   }
-
   markers.push(markerOpt);
-
   Gmaps.map_canvas.addMarkers(markers);
 
   var marker = Gmaps.map_canvas.markers[Gmaps.map_canvas.markers.length - 1];
@@ -192,7 +190,12 @@ function addNewLocationMarker(lat, lng){
   }
 }
 
-// ???
+function closeInfowindow() {
+  $.each(Gmaps.map_canvas.markers, function(i, m){
+    m.infowindow.close();
+  });
+}
+
 function replaceMarkerPosition(lat, lng){
   var marker = window.editedMarker;
   marker.serviceObject.setPosition(new google.maps.LatLng(lat, lng));
