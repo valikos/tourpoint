@@ -1,3 +1,13 @@
+Geocoder.configure(
+  :lookup => :bing,
+  :api_key => ENV["BING_KEY"],
+  :ip_lookup => :maxmind,
+  :bing => { :api_key => ENV["BING_KEY"] },
+  :maxmind => { :api_key => ENV["MAXMIND_GEOIP_CITY"], :service => :city },
+  :timeout => 10,
+  :use_https => false,
+  :language => :en)
+
 # # geocoding service (see below for supported options):
 # Geocoder::Configuration.lookup = :maxmind
 # Geocoder::Configuration.ip_lookup = :ip_maxmind
@@ -15,12 +25,3 @@
 # # language to use (for search queries and reverse geocoding):
 # Geocoder::Configuration.language = :en
 
-Geocoder.configure(
-  :lookup => :bing,
-  :ip_lookup => :maxmind,
-  :bing => { :api_key => ENV["BING_KEY"] },
-  :maxmind => { :api_key => ENV["MAXMIND_GEOIP_CITY"], :service => :city },
-  :timeout => 10,
-  :use_https => false,
-  :language => :en
-)
