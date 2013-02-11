@@ -3,7 +3,7 @@ Geocoder::Configuration.lookup = :bing
 
 # to use an API key:
 # FIXME:Need to move this to a different key in production
-Geocoder::Configuration.api_key = ENV["BING_KEY"]
+Geocoder::Configuration.api_key = ENV["MAXMIND_GEOIP_CITY"]
 
 # geocoding service request timeout, in seconds (default 3):
 Geocoder::Configuration.timeout = 10
