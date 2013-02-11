@@ -66,7 +66,6 @@ private
   end
 
   def current_location
-    @request = [request.ip, request.location]
     @current_location = {}
     @current_location['lat'] = request.location.latitude rescue 0
     @current_location['lng'] = request.location.longitude rescue 0
