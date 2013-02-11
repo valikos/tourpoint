@@ -1,5 +1,6 @@
 # geocoding service (see below for supported options):
-Geocoder::Configuration.lookup = :bing
+Geocoder::Configuration.lookup = :maxmind
+Geocoder::Configuration.ip_lookup = :maxmind
 
 # to use an API key:
 # FIXME:Need to move this to a different key in production
