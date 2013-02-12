@@ -19,8 +19,10 @@ end
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.12.0'
-  gem 'factory_girl_rails', '~> 4.1.0'
+  gem 'capybara', '~> 2.0.2'
+  gem 'launchy', '~> 2.2.0'
   gem 'faker'
+  gem 'factory_girl_rails', '~> 4.1.0'
 end
 
 group :development do
@@ -30,9 +32,7 @@ group :development do
 end
 
 group :test do
-  gem 'capybara', '1.1.2'
   gem 'database_cleaner'
-  gem 'launchy'
   gem 'shoulda', '~> 3.3.2'
 end
 

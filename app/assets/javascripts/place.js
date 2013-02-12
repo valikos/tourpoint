@@ -18,6 +18,7 @@ $(document).ready(function(){
       $('#places_location').val($(item).data('location'));
     }
   });
+
   $('#place_location')
   .live('ajax:success', function(evt, data, status, xhr){
     dropUndefinedMarker();
@@ -33,7 +34,7 @@ $(document).ready(function(){
           "</label>"
         );
       }
-      $('#location-select').modal({
+      $('div#location-select').modal({
         keyboard: false
       });
     } else if (data instanceof Array && data.length === 1) {

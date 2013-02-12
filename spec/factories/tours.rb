@@ -8,7 +8,7 @@ FactoryGirl.define do
     sequence(:title) { |n| "Title #{n}" }
     sequence(:description) { |n| "Description #{n}" }
     price
-    active true
+    active false
     sequence(:start_date) { Date.today }
     sequence(:end_date) { |n| Date.today + n.days }
 
