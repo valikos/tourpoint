@@ -214,3 +214,9 @@ function clearSuccessAlert(){
     $('div#alert-success').remove();
   }
 }
+
+function showActionMsg(msg){
+  $(msg).show('blind', 500, function(){
+    $(msg).delay(1500).hide('blind', 500);
+  });
+}

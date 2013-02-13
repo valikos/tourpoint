@@ -7,9 +7,7 @@ $(document).ready(function(){
     resetLocationForm();
     dropMarkerAnimation(location, data[1].infovindow);
     rewriteAllPolylines();
-    $('#createdAlert').fadeIn(500, function(){
-      $('#createdAlert').delay(1500).fadeOut(500);
-    });
+    showActionMsg('#createdAlert');
   })
   .live('ajax:error', function( xhr, textStatus, errorThrown ){
     var error = JSON.parse(textStatus.responseText);
@@ -102,9 +100,7 @@ $(document).ready(function(){
     window.editedLocation = undefined;
     window.newLocationForm = undefined;
     clearSuccessAlert();
-    $('#updatedAlert').fadeIn(500, function(){
-      $('#updatedAlert').delay(1500).fadeOut(500);
-    });
+    showActionMsg('#updatedAlert');
   })
   .live('ajax:error', function(xhr, textStatus, errorThrown){
     var error = JSON.parse(textStatus.responseText);

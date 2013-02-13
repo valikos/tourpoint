@@ -1,10 +1,3 @@
-<div id="updatedAlert" class="alert alert-success hide">
-  Location updated
-</div>
-
-<div id="createdAlert" class="alert alert-success hide">
-  Location created
-</div>
 
 <div class="page-header">
   <h1><%= @tour.title %></h1>
@@ -17,6 +10,15 @@
       <li><%= link_to 'Tour', edit_tour_path(@tour.id) %> <span class="divider">/</span></li>
       <li class="active">Create itinerary</li>
     </ul>
+
+    <div id="updatedAlert" class="alert alert-success hide">
+      Location updated
+    </div>
+
+    <div id="createdAlert" class="alert alert-success hide">
+      Location created
+    </div>
+
     <div id="action-form">
       <%= render partial: 'locations/form' %>
     </div>
