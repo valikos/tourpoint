@@ -1,4 +1,15 @@
 Tourhop::Application.routes.draw do
+  resource :place, only: :create
+
+  resources :tours do
+    resources :locations, except: [:index, :show, :new] do
+      collection { post :sort }
+    end
+    member { get :itinerary }
+  end
+
+  root :to => 'tours#index'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -48,7 +59,6 @@ Tourhop::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
 
   # See how all your routes lay out with "rake routes"
 

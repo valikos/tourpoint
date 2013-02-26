@@ -28,26 +28,50 @@ GEM
     activesupport (3.2.11)
       i18n (~> 0.6)
       multi_json (~> 1.0)
+<<<<<<< HEAD
     addressable (2.3.2)
     arel (3.0.2)
     bourne (1.1.2)
       mocha (= 0.10.5)
     builder (3.0.4)
     capybara (1.1.2)
+=======
+    addressable (2.3.3)
+    arel (3.0.2)
+    better_errors (0.7.0)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
+    binding_of_caller (0.7.1)
+      debug_inspector (>= 0.0.1)
+    bootstrap-datepicker-rails (0.6.42)
+      railties (>= 3.0)
+    bourne (1.1.2)
+      mocha (= 0.10.5)
+    builder (3.0.4)
+    capybara (2.0.2)
+>>>>>>> dev
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       selenium-webdriver (~> 2.0)
+<<<<<<< HEAD
       xpath (~> 0.1.4)
     childprocess (0.3.6)
       ffi (~> 1.0, >= 1.0.6)
+=======
+      xpath (~> 1.0.0)
+    childprocess (0.3.8)
+      ffi (~> 1.0, >= 1.0.11)
+    coderay (1.0.9)
+>>>>>>> dev
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
     coffee-script (2.2.0)
       coffee-script-source
       execjs
+<<<<<<< HEAD
     coffee-script-source (1.4.0)
     columnize (0.3.6)
     database_cleaner (0.9.1)
@@ -60,6 +84,24 @@ GEM
     debugger-ruby_core_source (1.1.6)
     diff-lcs (1.1.3)
     erubis (2.7.0)
+=======
+    coffee-script-source (1.5.0)
+    columnize (0.3.6)
+    commonjs (0.2.6)
+    daemons (1.1.9)
+    database_cleaner (0.9.1)
+    debug_inspector (0.0.2)
+    debugger (1.3.3)
+      columnize (>= 0.3.1)
+      debugger-linecache (~> 1.1.1)
+      debugger-ruby_core_source (~> 1.2.0)
+    debugger-linecache (1.1.2)
+      debugger-ruby_core_source (>= 1.1.1)
+    debugger-ruby_core_source (1.2.0)
+    diff-lcs (1.1.3)
+    erubis (2.7.0)
+    eventmachine (1.0.0)
+>>>>>>> dev
     execjs (1.4.0)
       multi_json (~> 1.0)
     factory_girl (4.1.0)
@@ -67,6 +109,7 @@ GEM
     factory_girl_rails (4.1.0)
       factory_girl (~> 4.1.0)
       railties (>= 3.0.0)
+<<<<<<< HEAD
     ffi (1.3.1)
     figaro (0.5.2)
       rails (~> 3.0)
@@ -83,10 +126,35 @@ GEM
     libwebsocket (0.1.7.1)
       addressable
       websocket
+=======
+    faker (1.1.2)
+      i18n (~> 0.5)
+    ffi (1.4.0)
+    figaro (0.5.4)
+      rails (~> 3.0)
+    geocoder (1.1.6)
+    gmaps4rails (1.5.6)
+    hike (1.2.1)
+    i18n (0.6.1)
+    journey (1.0.4)
+    jquery-rails (2.2.1)
+      railties (>= 3.0, < 5.0)
+      thor (>= 0.14, < 2.0)
+    json (1.7.7)
+    launchy (2.2.0)
+      addressable (~> 2.3)
+    less (2.2.2)
+      commonjs (~> 0.2.6)
+    less-rails (2.2.6)
+      actionpack (>= 3.1)
+      less (~> 2.2.0)
+    libv8 (3.11.8.13)
+>>>>>>> dev
     mail (2.4.4)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+<<<<<<< HEAD
     metaclass (0.0.1)
     mime-types (1.19)
     mocha (0.10.5)
@@ -99,6 +167,25 @@ GEM
     rack-cache (1.2)
       rack (>= 0.4)
     rack-ssl (1.3.2)
+=======
+    meta_request (0.2.2)
+      rack-contrib
+      railties
+    metaclass (0.0.1)
+    mime-types (1.21)
+    mocha (0.10.5)
+      metaclass (~> 0.0.1)
+    multi_json (1.6.1)
+    nokogiri (1.5.6)
+    pg (0.14.1)
+    polyglot (0.3.3)
+    rack (1.4.5)
+    rack-cache (1.2)
+      rack (>= 0.4)
+    rack-contrib (1.1.0)
+      rack (>= 0.9.1)
+    rack-ssl (1.3.3)
+>>>>>>> dev
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
@@ -118,14 +205,23 @@ GEM
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
     rake (10.0.3)
+<<<<<<< HEAD
     rdoc (3.12)
+=======
+    rdoc (3.12.2)
+>>>>>>> dev
       json (~> 1.4)
     ref (1.0.2)
     rspec-core (2.12.2)
     rspec-expectations (2.12.1)
       diff-lcs (~> 1.1.3)
+<<<<<<< HEAD
     rspec-mocks (2.12.1)
     rspec-rails (2.12.1)
+=======
+    rspec-mocks (2.12.2)
+    rspec-rails (2.12.2)
+>>>>>>> dev
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
@@ -133,6 +229,7 @@ GEM
       rspec-expectations (~> 2.12.0)
       rspec-mocks (~> 2.12.0)
     rubyzip (0.9.9)
+<<<<<<< HEAD
     sass (3.2.5)
     sass-rails (3.2.5)
       railties (~> 3.2.0)
@@ -143,6 +240,18 @@ GEM
       libwebsocket (~> 0.1.3)
       multi_json (~> 1.0)
       rubyzip
+=======
+    sass (3.2.6)
+    sass-rails (3.2.6)
+      railties (~> 3.2.0)
+      sass (>= 3.1.10)
+      tilt (~> 1.3)
+    selenium-webdriver (2.30.0)
+      childprocess (>= 0.2.5)
+      multi_json (~> 1.0)
+      rubyzip
+      websocket (~> 1.0.4)
+>>>>>>> dev
     shoulda (3.3.2)
       shoulda-context (~> 1.0.1)
       shoulda-matchers (~> 1.4.1)
@@ -155,15 +264,30 @@ GEM
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
+<<<<<<< HEAD
     therubyracer (0.11.1)
       libv8 (~> 3.11.8.7)
       ref
     thor (0.16.0)
+=======
+    therubyracer (0.11.3)
+      libv8 (~> 3.11.8.12)
+      ref
+    thin (1.5.0)
+      daemons (>= 1.0.9)
+      eventmachine (>= 0.12.6)
+      rack (>= 1.0.0)
+    thor (0.17.0)
+>>>>>>> dev
     tilt (1.3.3)
     treetop (1.4.12)
       polyglot
       polyglot (>= 0.3.1)
+<<<<<<< HEAD
     twitter-bootstrap-rails (2.2.0)
+=======
+    twitter-bootstrap-rails (2.2.4)
+>>>>>>> dev
       actionpack (>= 3.1)
       execjs
       railties (>= 3.1)
@@ -171,27 +295,54 @@ GEM
     uglifier (1.3.0)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
+<<<<<<< HEAD
     websocket (1.0.6)
     xpath (0.1.4)
+=======
+    websocket (1.0.7)
+    xpath (1.0.0)
+>>>>>>> dev
       nokogiri (~> 1.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+<<<<<<< HEAD
   capybara (= 1.1.2)
+=======
+  better_errors
+  binding_of_caller
+  bootstrap-datepicker-rails
+  capybara (~> 2.0.2)
+>>>>>>> dev
   coffee-rails (~> 3.2.1)
   database_cleaner
   debugger
   factory_girl_rails (~> 4.1.0)
+<<<<<<< HEAD
   figaro
   jquery-rails
   launchy
+=======
+  faker
+  figaro
+  geocoder
+  gmaps4rails
+  jquery-rails
+  launchy (~> 2.2.0)
+  less-rails (~> 2.2.6)
+  meta_request
+>>>>>>> dev
   pg
   rails (= 3.2.11)
   rspec-rails (~> 2.12.0)
   sass-rails (~> 3.2.3)
   shoulda (~> 3.3.2)
   therubyracer
+<<<<<<< HEAD
+=======
+  thin
+>>>>>>> dev
   twitter-bootstrap-rails (~> 2.2.0)
   uglifier (>= 1.0.3)

@@ -11,6 +11,32 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require jquery-ui
 //= require jquery_ujs
 //= require twitter/bootstrap
+//= require bootstrap-datepicker/core
+//= require extras
 //= require_tree .
+
+$(document).ready(function(e){
+  $("#tour_start_date").datepicker({
+    'format': 'yyyy-mm-dd',
+    'weekStart': 0,
+    'autoclose': true
+  });
+  $("#tour_end_date").datepicker({
+    'format': 'yyyy-mm-dd',
+    'weekStart': 0,
+    'autoclose': true
+  });
+
+  $('table#tour_locations_list tbody').sortable({
+    axis: 'y',
+    handle: '.drag-handle',
+    update: function(){
+      $.post($(this).data('update-url'), $(this).sortable('serialize'));
+      rewriteSortPolylines();
+    },
+    helper: fixHelper
+  });
+});
